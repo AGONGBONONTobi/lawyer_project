@@ -41,18 +41,21 @@ export default function Presentation({ sectionRef }) {
 
           <Reveal as="aside" className="fiche">
             <p className="fiche-label">Formation</p>
+            {/* Du plus récent au plus ancien. Seul le CAPA est daté : si les
+                années des deux diplômes sont fournies, vérifier que l'ordre
+                ci-dessous correspond bien à la chronologie réelle. */}
             <ul className="fiche-list">
               <li>
-                <span>Mastère Spécialisé Juriste Manager International</span>
-                <small>EMLYON Business School</small>
+                <span>CAPA — Certificat d'aptitude à la profession d'avocat</span>
+                <small>2022</small>
               </li>
               <li>
                 <span>Master 2 Droit des Relations Internationales et Européennes</span>
                 <small>Université de Cergy-Pontoise</small>
               </li>
               <li>
-                <span>Serment prêté au Barreau de Paris</span>
-                <small>Février 2024</small>
+                <span>Mastère Spécialisé Juriste Manager International</span>
+                <small>EMLYON Business School</small>
               </li>
             </ul>
             <p className="fiche-label">Langues</p>

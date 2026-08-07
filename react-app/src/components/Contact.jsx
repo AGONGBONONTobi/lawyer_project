@@ -112,10 +112,24 @@ export default function Contact({ sectionRef }) {
                   </div>
                   <div>
                     <strong>Horaires</strong>
-                    <span className="hours-table">
-                      <span>Lundi – Vendredi</span><span>9h – 19h</span>
-                      <span>Samedi</span><span>Fermé</span>
-                      <span>Dimanche</span><span>Fermé</span>
+                    {/* <details> natif plutôt qu'un accordéon Radix : pas d'état à
+                        gérer, replié par défaut sur mobile où la place manque, et
+                        le détail reste lisible même sans JavaScript. */}
+                    <details className="hours">
+                      <summary>
+                        <span className="hours-summary-label">Lundi – Vendredi</span>
+                        <span className="hours-summary-value">9h – 19h</span>
+                      </summary>
+                      <span className="hours-table">
+                        <span>Lundi</span><span>9h – 19h</span>
+                        <span>Mardi</span><span>9h – 19h</span>
+                        <span>Mercredi</span><span>9h – 19h</span>
+                        <span>Jeudi</span><span>9h – 19h</span>
+                        <span>Vendredi</span><span>9h – 19h</span>
+                      </span>
+                    </details>
+                    <span className="hours-table hours-weekend">
+                      <span>Samedi – Dimanche</span><span>Fermé</span>
                     </span>
                   </div>
                 </li>

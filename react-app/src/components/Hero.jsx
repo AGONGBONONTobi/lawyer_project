@@ -10,7 +10,7 @@ export default function Hero({ sectionRef }) {
       <div className="container hero-grid">
         <div className="hero-text">
           <Reveal as="p" className="eyebrow">
-            Avocate — Barreau de Paris · Serment prêté en 2024
+            Avocate — Barreau de Paris
           </Reveal>
 
           <Reveal as="h1" className="hero-title" delay="1">
