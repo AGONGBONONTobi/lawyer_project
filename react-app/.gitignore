@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Variables d'environnement (la clé anon reste publique, mais on ne versionne pas le fichier)
+.env
+.env.*
+!.env.example

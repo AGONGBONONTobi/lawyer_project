@@ -1,40 +1,6 @@
+import { useEffect, useState } from "react";
 import Reveal from "./Reveal";
-
-const DOSSIERS = [
-  {
-    id: "commercial",
-    domain: "Droit commercial",
-    subtitle: "Contrats · créances · contentieux",
-    points: [
-      "Rédaction et négociation de contrats commerciaux",
-      "Recouvrement de créances et rupture abusive",
-      "Contentieux judiciaire et médiation",
-    ],
-    img: "/assets/img/droit-commerce.jpg",
-  },
-  {
-    id: "famille",
-    domain: "Droit de la famille",
-    subtitle: "Divorce · garde · violences conjugales",
-    points: [
-      "Divorce contentieux et à l'amiable",
-      "Garde des enfants et pension alimentaire",
-      "Protection face aux violences conjugales",
-    ],
-    img: "/assets/img/droit-famille.jpg",
-  },
-  {
-    id: "etrangers",
-    domain: "Droit des étrangers",
-    subtitle: "Visa · naturalisation · OQTF",
-    points: [
-      "Demandes de titre de séjour et renouvellement",
-      "Recours contre OQTF et refus de visa",
-      "Procédures de naturalisation",
-    ],
-    img: "/assets/img/notre-dame.jpg",
-  },
-];
+import { DOMAINES_PAR_DEFAUT, fetchDomainesPublies } from "../lib/domaines";
 
 function DomainCard({ domain, subtitle, points, img, delay }) {
   return (
@@ -66,11 +32,35 @@ function DomainCard({ domain, subtitle, points, img, delay }) {
   );
 }
 
-export default function DomainCards({ dossiers = DOSSIERS }) {
+/**
+ * Cartes des domaines d'intervention.
+ *
+ * Le premier rendu utilise les domaines livrés en dur, puis la base prend le
+ * relais. C'est volontaire : afficher tout de suite un contenu juste vaut mieux
+ * qu'un vide ou un squelette le temps d'un aller-retour réseau, sur une section
+ * qui est le cœur de l'argumentaire du cabinet. `fetchDomainesPublies` ne
+ * rejette jamais — en cas d'échec, on reste simplement sur ce premier rendu.
+ */
+export default function DomainCards({ dossiers }) {
+  const [domaines, setDomaines] = useState(DOMAINES_PAR_DEFAUT);
+
+  useEffect(() => {
+    if (dossiers) return; // liste imposée par l'appelant : pas de lecture
+    let actif = true;
+    fetchDomainesPublies().then((d) => {
+      if (actif) setDomaines(d);
+    });
+    return () => {
+      actif = false;
+    };
+  }, [dossiers]);
+
+  const liste = dossiers ?? domaines;
+
   return (
     <div className="domain-cards-grid">
-      {dossiers.map((d, i) => (
-        <DomainCard key={d.id} {...d} delay={String(i + 1)} />
+      {liste.map((d, i) => (
+        <DomainCard key={d.slug ?? d.id} {...d} delay={String(i + 1)} />
       ))}
     </div>
   );

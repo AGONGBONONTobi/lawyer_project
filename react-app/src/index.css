@@ -1336,3 +1336,67 @@ textarea { resize: vertical; min-height: 110px; }
   html {
     @apply font-sans;
   }
+}
+/* ---------- Back office ----------------------------------------------------
+   Les styles de formulaire du site sont posés sur des sélecteurs d'élément nus
+   (`input`, `label`), donc hors cascade Tailwind. Or une règle sans @layer
+   l'emporte sur une règle en @layer quelle que soit la spécificité : les
+   classes utilitaires du back office perdaient contre elles, et les champs
+   héritaient du style « ligne soulignée » de la page de contact.
+
+   L'apparence des champs d'administration est donc définie ici, également hors
+   layer, sous le périmètre `.admin`. Ne pas la remplacer par des classes
+   Tailwind : elles seraient de nouveau écrasées. */
+
+.admin label {
+  display: revert;
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: inherit;
+  font-weight: inherit;
+  margin-bottom: 0;
+  color: inherit;
+}
+
+.admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.admin select,
+.admin textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: #ffffff;
+  color: var(--text);
+}
+
+.admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+.admin select:focus,
+.admin textarea:focus {
+  border-color: var(--gold);
+  background: #ffffff;
+  outline: none;
+  padding-left: 0.75rem; /* annule le décalage au focus du formulaire de contact */
+}
+
+.admin input[type="file"] {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+}
+
+.admin input[type="checkbox"] {
+  width: auto;
+  padding: 0;
+  border: revert;
+  border-radius: revert;
+  background: revert;
+}
+
+.admin textarea { min-height: revert; }
