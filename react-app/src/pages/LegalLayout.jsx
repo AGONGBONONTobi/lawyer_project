@@ -35,8 +35,3 @@ export default function LegalLayout({ eyebrow = "Informations légales", title, 
     </>
   );
 }
-
-/** Marqueur d'information à renseigner par le cabinet avant mise en ligne. */
-export function Todo({ children }) {
-  return <span className="legal-todo">[À compléter : {children}]</span>;
-}

@@ -1,10 +1,16 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { supabase, isSupabaseConfigured } from "../../lib/supabase";
 import { useSession } from "../../lib/useSession";
+
+const ONGLETS = [
+  { to: "/admin/domaines", libelle: "Domaines d'expertise" },
+  { to: "/admin/pages-legales", libelle: "Pages légales" },
+];
 
 /** Encadrement commun des écrans d'administration : en-tête, largeur, déconnexion. */
 export function AdminShell({ titre, sousTitre, actions, children }) {
   const { session } = useSession();
+  const { pathname } = useLocation();
 
   return (
     <div className="admin min-h-screen bg-[#F7F5F1] text-[#111]">
@@ -41,6 +47,26 @@ export function AdminShell({ titre, sousTitre, actions, children }) {
             </button>
           </div>
         </div>
+
+        <nav className="mx-auto flex max-w-5xl gap-1 px-6" aria-label="Sections de l'administration">
+          {ONGLETS.map((o) => {
+            const actif = pathname.startsWith(o.to);
+            return (
+              <Link
+                key={o.to}
+                to={o.to}
+                aria-current={actif ? "page" : undefined}
+                className={`-mb-px border-b-2 px-3 py-2.5 text-sm no-underline ${
+                  actif
+                    ? "border-[#B8975A] font-medium text-[#8A6E2A]"
+                    : "border-transparent text-[#595959] hover:text-[#111]"
+                }`}
+              >
+                {o.libelle}
+              </Link>
+            );
+          })}
+        </nav>
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-10">
