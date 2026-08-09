@@ -1,0 +1,73 @@
+# Configuration Apache pour l'hébergement mutualisé IONOS.
+#
+# Vite recopie tout le contenu de public/ dans dist/ : ce fichier se retrouve
+# donc automatiquement à la racine du dossier à téléverser.
+
+# ---------------------------------------------------------------- routage SPA
+#
+# Le site est une application à page unique : seul /index.html existe sur le
+# disque. Sans cette règle, ouvrir directement https://…/admin/domaines ou
+# rafraîchir la page renverrait une erreur 404 d'Apache, puisqu'aucun fichier ne
+# porte ce nom. On renvoie donc vers index.html toute URL qui ne correspond ni à
+# un fichier ni à un dossier réel, et c'est React Router qui prend le relais.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Forcer HTTPS. IONOS fournit un certificat, mais ne redirige pas toujours.
+  # À commenter si le certificat n'est pas encore actif, sinon le site devient
+  # inaccessible le temps de son émission.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ---------------------------------------------------------------- cache
+#
+# Vite signe le nom de chaque asset avec un hash du contenu : un fichier donné
+# ne change jamais, on peut donc le mettre en cache un an. index.html, lui, ne
+# doit jamais être mis en cache — c'est lui qui pointe vers les derniers assets,
+# et un index.html périmé ferait charger l'ancienne version du site après chaque
+# mise en ligne.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                 "access plus 1 year"
+  ExpiresByType application/javascript   "access plus 1 year"
+  ExpiresByType image/jpeg               "access plus 1 year"
+  ExpiresByType image/png                "access plus 1 year"
+  ExpiresByType image/svg+xml            "access plus 1 year"
+  ExpiresByType image/webp               "access plus 1 year"
+  ExpiresByType font/woff2               "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|jpg|jpeg|png|svg|webp|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # En-têtes de sécurité de base.
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ---------------------------------------------------------------- compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------------- divers
+# Pas de listing de dossier si un index venait à manquer.
+Options -Indexes
+ErrorDocument 404 /index.html
