@@ -33,7 +33,19 @@ export default function Reveal({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.12 }
+      // Seuil à 0 + marge basse, et surtout PAS un seuil de ratio.
+      //
+      // La variante "clip" part avec `clip-path: inset(0 0 100% 0)`, que le
+      // navigateur applique avant de calculer l'intersection : le rectangle
+      // mesuré fait 0 px de haut et le ratio reste bloqué à 0, quelle que soit
+      // la position à l'écran. Un seuil de 0.12 n'était donc jamais atteint et
+      // l'élément restait invisible pour toujours — l'animation ne pouvait pas
+      // se déclencher, puisque c'est elle qui lève le clip.
+      //
+      // La marge négative en bas remplace l'intention du seuil : ne pas
+      // déclencher pile sur le bord de l'écran. En pixels et non en pourcentage,
+      // pour qu'un élément en pied de page finisse toujours par se révéler.
+      { threshold: 0, rootMargin: "0px 0px -48px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();

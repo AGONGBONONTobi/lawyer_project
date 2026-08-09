@@ -38,6 +38,7 @@
   --ribbon-on-dark: #FFFFFF;
   --muted-ink: #595959;
   --line: #E0E0E0;
+  --field-line: #7A7A7A;   /* délimitation des champs de saisie : 4,1:1 sur le crème */
   --on-ribbon: #FFFFFF;
   --radius-sharp: 2px;
   --muted: oklch(0.97 0 0);
@@ -330,9 +331,10 @@ ul { list-style: none; margin: 0; padding: 0; }
    diagonale claire de l'escalier, juste sous le sous-titre. */
 .hero-lead { color: #ffffff; text-shadow: 0 1px 22px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.9); }
 .hero-tags li {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.55);
   color: #ffffff;
-  background: rgba(10, 10, 10, 0.42);
+  background: rgba(10, 10, 10, 0.55);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
 }
@@ -353,9 +355,13 @@ ul { list-style: none; margin: 0; padding: 0; }
   font-size: clamp(2.6rem, 4.2vw + 1rem, 4.1rem);
   margin: 0.1em 0 0.35em;
 }
+/* Pas de `color` ici : le bloc « Texte clair sur fond sombre » plus haut pose
+   déjà #ffffff. Cette règle arrive après lui dans le fichier, à spécificité
+   égale — un var(--muted-ink) (#595959) y écrasait le blanc et laissait le
+   sous-titre à 2:1 sur le hero sombre. Les couleurs du hero se déclarent
+   uniquement dans ce bloc-là. */
 .hero-lead {
   font-size: 1.12rem;
-  color: var(--muted-ink);
   max-width: 46ch;
   margin: 0 0 2em;
 }
@@ -370,6 +376,10 @@ ul { list-style: none; margin: 0; padding: 0; }
   flex-wrap: wrap;
   gap: 10px;
 }
+/* Même collision que .hero-lead : ni `color` ni raccourci `border` ici. Le
+   raccourci réinitialisait border-color et effaçait le liseré clair du bloc
+   sombre, et var(--muted-ink) rendait les libellés presque illisibles. On ne
+   garde que la géométrie ; la couleur vient du bloc sombre. */
 .hero-tags li {
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -377,8 +387,8 @@ ul { list-style: none; margin: 0; padding: 0; }
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 0.6em 1em;
-  border: 1px solid var(--gold-border);
-  color: var(--muted-ink);
+  border-width: 1px;
+  border-style: solid;
 }
 .hero-photo {
   margin: 0;
@@ -412,16 +422,20 @@ ul { list-style: none; margin: 0; padding: 0; }
   background: linear-gradient(to bottom, transparent, var(--gold), transparent);
   border-radius: 2px;
 }
+/* Troisième occurrence de la même collision, après .hero-lead et .hero-tags li :
+   pas de `color` ici, elle est posée par le bloc sombre plus haut. */
 .hero-photo figcaption {
   margin-top: 14px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--muted-ink);
 }
 @media (max-width: 900px) {
-  .hero { padding: 40px 0 64px; }
+  /* La photo passe en premier sous 900px et venait buter dans la pastille de
+     navigation, qui flotte jusqu'à 64px du haut : 40px de padding la laissaient
+     chevaucher de 24px. 92px dégagent la nav et laissent une respiration. */
+  .hero { padding: 92px 0 64px; }
   .hero-grid { grid-template-columns: 1fr; gap: 36px; }
   .hero-photo { order: -1; }
   .hero-photo-frame { max-width: 260px; }
@@ -764,17 +778,28 @@ label {
 .contact-form div:focus-within label {
   color: var(--gold-ink);
 }
+/* Le trait de soulignement était en var(--line) (#E0E0E0) sur le panneau
+   crème du formulaire : 1,27:1 de contraste, soit un champ littéralement
+   invisible tant qu'on ne l'avait pas touché. --field-line monte à 4,1:1,
+   au-dessus des 3:1 exigés pour la délimitation d'un champ. */
 input, select, textarea {
   width: 100%;
   font-family: var(--font-body);
   font-size: 0.98rem;
   padding: 0.8em 1em;
   border: none;
-  border-bottom: 1.5px solid var(--line);
+  border-bottom: 1.5px solid var(--field-line);
   border-radius: 4px 4px 0 0;
-  background: rgba(184, 151, 90, 0.02);
+  background: rgba(184, 151, 90, 0.06);
   color: var(--text);
   transition: border-color var(--transition), background-color var(--transition), padding-left var(--transition);
+}
+/* Le message fait plus de 110px de haut : un simple trait en bas, loin de son
+   libellé, ne dit pas où commence ni où finit la zone de saisie. Il lui faut
+   un contour complet, contrairement aux champs d'une ligne. */
+textarea {
+  border: 1.5px solid var(--field-line);
+  border-radius: 4px;
 }
 .dark input, .dark select, .dark textarea {
   background: rgba(184, 151, 90, 0.01);
@@ -1160,87 +1185,60 @@ textarea { resize: vertical; min-height: 110px; }
 .portrait-editorial-text {
   display: flex; flex-direction: column; justify-content: center;
 }
+/* La citation ferme sa colonne : c'est la gouttière de la grille qui gère
+   l'écart avec les engagements, sinon il est compté deux fois en mobile. */
 .portrait-editorial-text .portrait-band-quote {
-  margin-bottom: 2.5rem;
+  margin-bottom: 0;
 }
-/* inline stats inside the text block */
-.portrait-stats-inline {
-  display: flex; flex-direction: column; gap: 0;
+/* ---- Engagements du bandeau (colonne droite) ----
+   Remplacent le portrait et les anciens repères. Le repère « 2024 —
+   Prestation de serment » disparaît avec eux, conformément à la demande de
+   retirer cette mention du site. */
+.portrait-engagements {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   border-top: 1px solid var(--gold-border);
 }
-.portrait-stats-inline .portrait-stat {
-  display: flex; flex-direction: row; align-items: center;
-  justify-content: space-between;
-  padding: 18px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+.portrait-engagement {
+  padding: 26px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-.portrait-stats-inline .portrait-stat-value {
-  font-family: var(--font-display); font-size: 1.7rem; font-weight: 600;
-  color: var(--gold); line-height: 1;
-}
-.portrait-stats-inline .portrait-stat-label {
-  font-family: var(--font-mono); font-size: 0.68rem;
-  text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted-ink);
-}
-/* image side */
-.portrait-editorial-image-wrap {
-  position: relative;
-}
-.portrait-editorial-frame {
-  position: relative;
-  overflow: hidden;
-}
-.portrait-editorial-frame::before {
-  content: "";
-  position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to top, rgba(10,8,6,0.35) 0%, transparent 50%);
-  pointer-events: none;
-}
-.portrait-editorial-img {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: top center;
+.portrait-engagement-value {
   display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.35em;
 }
-/* gold accent bar on left edge of portrait */
-.portrait-editorial-accent {
-  position: absolute;
-  top: 8%;
-  left: -3px;
-  width: 3px;
-  height: 50%;
-  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-  border-radius: 2px;
+.portrait-engagement-title {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+  margin-bottom: 0.7em;
 }
-/* mobile: stack vertically, image first */
+.portrait-engagement-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* mobile : une seule colonne, citation puis engagements */
 @media (max-width: 768px) {
+  .portrait-editorial { padding: 64px 0; }
   .portrait-editorial-inner {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
-  .portrait-editorial-text {
-    order: 2;
-  }
-  .portrait-editorial-image-wrap {
-    order: 1;
-  }
-  .portrait-editorial-img {
-    aspect-ratio: 4 / 5;
-  }
+  .portrait-engagement { padding: 22px 0; }
 }
-/* keep old portrait-stat styles for any remaining usage */
-.portrait-stat {
-  display: flex; flex-direction: column; align-items: flex-start;
-}
-.portrait-stat-value {
-  font-family: var(--font-display); font-size: 1.9rem; font-weight: 600;
-  color: var(--gold); line-height: 1; margin-bottom: 4px;
-}
-.portrait-stat-label {
-  font-family: var(--font-mono); font-size: 0.68rem;
-  text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-ink);
-}
+
 @theme inline {
   /* Unified type: shadcn/Tailwind utilities inherit the bespoke system.
      font-sans → Public Sans (matches body), font-serif → Fraunces (matches h1–h4). */
@@ -1366,7 +1364,7 @@ textarea { resize: vertical; min-height: 110px; }
   font-family: inherit;
   font-size: 0.875rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--field-line);
   border-radius: 2px;
   background: #ffffff;
   color: var(--text);
@@ -1399,4 +1397,4 @@ textarea { resize: vertical; min-height: 110px; }
   background: revert;
 }
 
-.admin textarea { min-height: revert; }
+.admin textarea { min-height: revert; border-radius: 2px; }
