@@ -1,0 +1,22 @@
+name: Keep Alive — Ping Render
+
+on:
+  schedule:
+    # Toutes les 10 minutes, 24h/24, 7j/7
+    - cron: "*/10 * * * *"
+  workflow_dispatch: # permet de lancer manuellement si besoin
+
+jobs:
+  ping:
+    name: Ping le site pour éviter l'inactivité
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping badirou-avocat.fr
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" --max-time 30 https://badirou-avocat.onrender.com)
+          echo "Réponse HTTP : $STATUS"
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 400 ]; then
+            echo "✅ Site actif (HTTP $STATUS)"
+          else
+            echo "⚠️ Réponse inattendue : HTTP $STATUS"
+          fi
