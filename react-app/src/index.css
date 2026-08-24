@@ -33,13 +33,13 @@
   --parchment: #FFFFFF;
   --parchment-deep: #F2F2F2;
   --parchment-warm: #FDFAF5;
-  --ribbon: #000000;
-  --ribbon-dark: #2A2A2A;
-  --ribbon-on-dark: #FFFFFF;
+  --ribbon: #D9C5B2;
+  --ribbon-dark: #C4AE98;
+  --ribbon-on-dark: #111111;
   --muted-ink: #595959;
   --line: #E0E0E0;
   --field-line: #7A7A7A;   /* délimitation des champs de saisie : 4,1:1 sur le crème */
-  --on-ribbon: #FFFFFF;
+  --on-ribbon: #111111;
   --radius-sharp: 2px;
   --muted: oklch(0.97 0 0);
 
@@ -273,137 +273,117 @@ ul { list-style: none; margin: 0; padding: 0; }
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  padding: 116px 0 116px;
-  background-color: #0a0a0a;
-}
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-/* Image en bandeau, ancrée en haut et fondue vers le bas (style du hero d'origine),
-   avec un filtre noir en dégradé pour la lisibilité du texte.
-
-   Le filtre a été allégé à la demande du client, qui trouvait le hero trop
-   sombre : l'image du Palais de Justice était presque éteinte à gauche. Le
-   dégradé reste plus dense côté texte — c'est lui qui porte le contraste du
-   titre — mais laisse désormais voir la photo. Les valeurs ne descendent pas
-   plus bas sans repasser sur les ombres portées de .hero-title / .hero-lead,
-   qui ne suffisent pas seules sur les zones claires de l'image. */
-.hero-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
+  padding: 120px 0 100px;
+  /* Image du Palais ancrée à droite — elle encadre naturellement le portrait.
+     La gauche reste opaque (texte lisible), la droite laisse l'image respirer. */
+  background-image:
     linear-gradient(
-      100deg,
-      rgba(8, 8, 8, 0.74) 0%,
-      rgba(8, 8, 8, 0.54) 52%,
-      rgba(8, 8, 8, 0.22) 100%
+      to right,
+      var(--parchment-warm) 0%,
+      var(--parchment-warm) 38%,
+      rgba(247, 245, 241, 0.7) 55%,
+      rgba(247, 245, 241, 0.15) 100%
     ),
     url("/assets/img/hero-palais-justice.jpg");
-  background-size: cover, cover;
-  background-position: center, top center;
-  background-repeat: no-repeat;
-  -webkit-mask-image: linear-gradient(to bottom, #000 50%, rgba(0, 0, 0, 0) 96%);
-  mask-image: linear-gradient(to bottom, #000 50%, rgba(0, 0, 0, 0) 96%);
+  background-color: var(--parchment-warm);
+  background-size: cover;
+  background-position: right center;
 }
-.hero-glow {
-  position: absolute;
-  top: -22%;
-  right: -12%;
-  width: 62%;
-  height: 82%;
-  background: radial-gradient(closest-side, rgba(184, 151, 90, 0.22), transparent 72%);
-  filter: blur(40px);
-  mix-blend-mode: screen;
-}
-.hero .container { position: relative; z-index: 1; }
 
-/* Texte clair sur fond sombre */
-.hero .eyebrow { color: var(--gold-light); text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6); }
-.hero-title { color: #ffffff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5); }
-/* Halo resserré en plus du halo large : le filtre allégé laisse passer la
-   diagonale claire de l'escalier, juste sous le sous-titre. */
-.hero-lead { color: #ffffff; text-shadow: 0 1px 22px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.9); }
-.hero-tags li {
-  border-color: rgba(255, 255, 255, 0.55);
-  color: #ffffff;
-  background: rgba(10, 10, 10, 0.55);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-}
-.hero-photo figcaption { color: rgba(255, 255, 255, 0.8); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.75); }
+.hero .container { position: relative; }
 
-/* Boutons adaptés au fond sombre */
-.hero .btn-primary { background: var(--gold); border-color: var(--gold); color: #1a140a; }
-.hero .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); color: #1a140a; }
-.hero .btn-outline { border-color: rgba(255, 255, 255, 0.5); color: #ffffff; }
-.hero .btn-outline:hover { background: #ffffff; border-color: #ffffff; color: var(--text); }
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 64px;
-  align-items: center;
+
+/* ── Texte : couleurs sombres sur fond clair — aucun halo nécessaire ── */
+.hero .eyebrow {
+  color: var(--gold-ink);
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  display: block;
 }
 .hero-title {
-  font-size: clamp(2.6rem, 4.2vw + 1rem, 4.1rem);
-  margin: 0.1em 0 0.35em;
+  color: var(--text);
+  font-size: clamp(3rem, 5.5vw + 0.5rem, 5.8rem);
+  line-height: 1.02;
+  margin: 0 0 2rem;
 }
-/* Pas de `color` ici : le bloc « Texte clair sur fond sombre » plus haut pose
-   déjà #ffffff. Cette règle arrive après lui dans le fichier, à spécificité
-   égale — un var(--muted-ink) (#595959) y écrasait le blanc et laissait le
-   sous-titre à 2:1 sur le hero sombre. Les couleurs du hero se déclarent
-   uniquement dans ce bloc-là. */
 .hero-lead {
-  font-size: 1.12rem;
-  max-width: 46ch;
-  margin: 0 0 2em;
+  color: var(--muted-ink);
+  font-size: 1.05rem;
+  max-width: 42ch;
+  margin: 0 0 1.8em;
+}
+
+/* ── Layout grille ──────────────────────────────────────────────────── */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.72fr;
+  gap: 72px;
+  align-items: stretch;
+}
+
+/* ── Colonne texte : flex vertical pour espacer les blocs ──────────── */
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.4rem;
+  /* PAS de background, backdrop-filter, border ni box-shadow */
+}
+
+/* ── Liste domaines — style fashion : lignes horizontales, hover glisse ── */
+.hero-domains {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.hero-domains li {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text);
+  padding: 0.75em 0;
+  border-bottom: 1px solid var(--line);
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease, padding-left 0.25s ease;
+  cursor: default;
+}
+.hero-domains li:hover {
+  color: var(--gold-ink);
+  padding-left: 0.6em;
+}
+
+/* ── CTA bloc ───────────────────────────────────────────────────────── */
+.hero-bottom {
+  /* séparé pour pouvoir utiliser mt-auto si besoin */
 }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin: 0 0 2.2em;
 }
-.hero-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-/* Même collision que .hero-lead : ni `color` ni raccourci `border` ici. Le
-   raccourci réinitialisait border-color et effaçait le liseré clair du bloc
-   sombre, et var(--muted-ink) rendait les libellés presque illisibles. On ne
-   garde que la géométrie ; la couleur vient du bloc sombre. */
-.hero-tags li {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.6em 1em;
-  border-width: 1px;
-  border-style: solid;
-}
+
+/* ── Boutons sur fond clair ─────────────────────────────────────────── */
+.hero .btn-primary { background: var(--gold); border-color: var(--gold); color: #1a140a; }
+.hero .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); color: #1a140a; }
+.hero .btn-outline { border-color: rgba(30, 27, 22, 0.4); color: var(--text); }
+.hero .btn-outline:hover { background: var(--text); border-color: var(--text); color: #fff; }
+
+/* ── Photo cadre ─────────────────────────────────────────────────────── */
 .hero-photo {
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .hero-photo-frame {
   position: relative;
   width: 100%;
-  max-width: 360px;
+  max-width: 340px;
   padding: 10px;
   background: var(--parchment-warm);
   border: 1px solid var(--gold-border);
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
 }
 .hero-photo-frame img {
   display: block;
@@ -422,23 +402,22 @@ ul { list-style: none; margin: 0; padding: 0; }
   background: linear-gradient(to bottom, transparent, var(--gold), transparent);
   border-radius: 2px;
 }
-/* Troisième occurrence de la même collision, après .hero-lead et .hero-tags li :
-   pas de `color` ici, elle est posée par le bloc sombre plus haut. */
 .hero-photo figcaption {
-  margin-top: 14px;
+  color: var(--muted-ink);
+  margin-top: 12px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  /* La photo passe en premier sous 900px et venait buter dans la pastille de
-     navigation, qui flotte jusqu'à 64px du haut : 40px de padding la laissaient
-     chevaucher de 24px. 92px dégagent la nav et laissent une respiration. */
-  .hero { padding: 92px 0 64px; }
-  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero { padding: 96px 0 64px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .hero-photo { order: -1; }
-  .hero-photo-frame { max-width: 260px; }
+  .hero-photo-frame { max-width: 240px; }
+  .hero-title { font-size: clamp(2.4rem, 8vw, 3.6rem); }
 }
 
 /* ---------- Engagements ---------- */

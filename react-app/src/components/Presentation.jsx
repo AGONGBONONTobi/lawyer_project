@@ -16,9 +16,9 @@ export default function Presentation({ sectionRef }) {
             </blockquote>
 
             <p className="lede">
-              Maître Badirou est titulaire d'un Mastère Spécialisé Juriste Manager International à l'EMLYON
-              Business School et d'un Master&nbsp;2 en Droit des Relations Internationales et Européennes à
-              l'Université de Cergy-Pontoise.
+              Maître Badirou est titulaire d'un Master&nbsp;2 en Droit des Relations Internationales et Européennes à
+              l'Université de Cergy-Pontoise et d'un Mastère Spécialisé Juriste Manager International à l'EMLYON
+              Business School.
             </p>
 
             <p>
@@ -50,12 +50,12 @@ export default function Presentation({ sectionRef }) {
                 <small>2022</small>
               </li>
               <li>
-                <span>Master 2 Droit des Relations Internationales et Européennes</span>
-                <small>Université de Cergy-Pontoise</small>
-              </li>
-              <li>
                 <span>Mastère Spécialisé Juriste Manager International</span>
                 <small>EMLYON Business School</small>
+              </li>
+              <li>
+                <span>Master 2 Droit des Relations Internationales et Européennes</span>
+                <small>Université de Cergy-Pontoise</small>
               </li>
             </ul>
             <p className="fiche-label">Langues</p>

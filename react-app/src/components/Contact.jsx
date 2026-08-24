@@ -1,36 +1,90 @@
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 import Reveal from "./Reveal";
 
-// Configuration EmailJS - Remplacer avec les vraies valeurs
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+// ── Configuration Brevo ───────────────────────────────────────────────────────
+// Clé API Brevo lue depuis les variables d'environnement Vite.
+// VITE_BREVO_API_KEY  → clé API Brevo (tableau de bord Brevo → SMTP & API)
+// VITE_BREVO_SENDER  → email expéditeur vérifié dans Brevo (ex: votre Gmail)
+const BREVO_API_KEY = import.meta.env.VITE_BREVO_API_KEY ?? "";
+const BREVO_SENDER  = import.meta.env.VITE_BREVO_SENDER  ?? "";
+const DESTINATAIRE  = "Moradeke.badirou@avocat.fr";
+
+/**
+ * Envoie un email via l'API Brevo (transactionnel).
+ * Le Reply-To est positionné sur l'email du visiteur : quand Maître Badirou
+ * clique « Répondre », sa réponse part directement au visiteur.
+ */
+async function envoyerAvecBrevo({ nom, email, telephone, sujet, message }) {
+  const corps = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto">
+      <h2 style="color:#8A6E2A;border-bottom:1px solid #E0E0E0;padding-bottom:8px">
+        Nouveau message — Cabinet Badirou
+      </h2>
+      <table style="width:100%;border-collapse:collapse">
+        <tr><td style="padding:6px 0;color:#595959;width:120px"><strong>Nom</strong></td>
+            <td style="padding:6px 0">${nom}</td></tr>
+        <tr><td style="padding:6px 0;color:#595959"><strong>Email</strong></td>
+            <td style="padding:6px 0"><a href="mailto:${email}">${email}</a></td></tr>
+        <tr><td style="padding:6px 0;color:#595959"><strong>Téléphone</strong></td>
+            <td style="padding:6px 0">${telephone || "—"}</td></tr>
+        <tr><td style="padding:6px 0;color:#595959"><strong>Sujet</strong></td>
+            <td style="padding:6px 0">${sujet}</td></tr>
+      </table>
+      <hr style="margin:16px 0;border:none;border-top:1px solid #E0E0E0">
+      <p style="white-space:pre-wrap;line-height:1.6">${message.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+      <hr style="margin:16px 0;border:none;border-top:1px solid #E0E0E0">
+      <p style="color:#595959;font-size:12px">
+        Message envoyé depuis le formulaire de contact de badirou-avocat.fr.<br>
+        Cliquez <strong>Répondre</strong> pour répondre directement à ${nom}.
+      </p>
+    </div>
+  `;
+
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "accept": "application/json",
+      "api-key": BREVO_API_KEY,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      sender:  { name: `${nom} via Cabinet Badirou`, email: BREVO_SENDER },
+      to:      [{ email: DESTINATAIRE, name: "Maître Moradéké Badirou" }],
+      replyTo: { email, name: nom },
+      subject: `Message de ${nom} — Cabinet Badirou`,
+      htmlContent: corps,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Erreur Brevo ${res.status}`);
+  }
+  return res.json();
+}
 
 export default function Contact({ sectionRef }) {
   const [status, setStatus] = useState({ text: "", kind: "" });
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
 
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const message = form.message.value.trim();
+    const nom       = form.elements["name"].value.trim();
+    const email     = form.elements["email"].value.trim();
+    const telephone = form.elements["phone"].value.trim();
+    const sujet     = form.elements["subject"].value;
+    const message   = form.elements["message"].value.trim();
 
-    if (!name || !email || !message) {
+    if (!nom || !email || !message) {
       setStatus({ text: "Merci de renseigner votre nom, votre email et votre message.", kind: "is-error" });
       return;
     }
 
-    if (
-      EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
-      EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID" ||
-      EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY"
-    ) {
+    if (!BREVO_API_KEY || !BREVO_SENDER) {
       setStatus({
-        text: "Configuration requise : Veuillez configurer vos identifiants EmailJS dans Contact.jsx.",
+        text: "Le formulaire de contact n'est pas encore configuré. Merci de nous contacter directement par téléphone ou par email.",
         kind: "is-error",
       });
       return;
@@ -39,28 +93,19 @@ export default function Contact({ sectionRef }) {
     setIsLoading(true);
     setStatus({ text: "Envoi en cours...", kind: "" });
 
-    emailjs
-      .sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        form,
-        EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
-          setIsLoading(false);
-          setStatus({ text: "Votre message a bien été envoyé. Merci !", kind: "is-success" });
-          form.reset();
-        },
-        (error) => {
-          setIsLoading(false);
-          setStatus({
-            text: "Une erreur est survenue lors de l'envoi. Veuillez réessayer ou envoyer un mail directement.",
-            kind: "is-error",
-          });
-          console.error("EmailJS Error:", error);
-        }
-      );
+    try {
+      await envoyerAvecBrevo({ nom, email, telephone, sujet, message });
+      setStatus({ text: "Votre message a bien été envoyé. Merci !", kind: "is-success" });
+      form.reset();
+    } catch (err) {
+      setStatus({
+        text: `Une erreur est survenue : ${err.message}. Veuillez réessayer ou nous contacter directement.`,
+        kind: "is-error",
+      });
+      console.error("Brevo Error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

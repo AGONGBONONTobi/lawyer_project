@@ -138,7 +138,7 @@ insert into public.domaines (slug, domain, subtitle, points, img, position) valu
       'Recours contre OQTF et refus de visa',
       'Procédures de naturalisation'
     ],
-    '/assets/img/notre-dame.jpg',
+    '/assets/img/tribunal-administratif.jpg',
     3
   )
 on conflict (slug) do nothing;

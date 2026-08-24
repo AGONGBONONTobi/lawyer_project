@@ -143,7 +143,67 @@ Chaque push sur la branche configurée reconstruit et publie le site.
 
 ---
 
-## 6. Après la première mise en ligne
+## 5b. Configurer EmailJS (formulaire de contact)
+
+Le formulaire de contact utilise [EmailJS](https://www.emailjs.com/) pour envoyer les messages vers `badirou.avocat@gmail.com`.
+
+### Étapes (une seule fois)
+
+1. Créer un compte gratuit sur **emailjs.com**.
+2. **Ajouter un service** : choisir *Gmail*, relier le compte `badirou.avocat@gmail.com`.
+   - Copier le **Service ID** affiché.
+3. **Créer un template** d'e-mail. Variables à inclure dans le corps :
+   ```
+   De : {{name}} <{{email}}>
+   Téléphone : {{phone}}
+   Sujet : {{subject}}
+   
+   {{message}}
+   ```
+   - Copier le **Template ID**.
+4. Dans *Account → General*, copier la **Public Key**.
+5. Renseigner les trois valeurs dans `react-app/.env` :
+   ```
+   VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
+   VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
+   VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxx
+   ```
+6. Si déployé via **Render** ou **IONOS Deploy Now**, ajouter ces trois variables dans les *Environment Variables* du service (même noms).
+
+---
+
+## 5c. Déployer l'Edge Function de gestion des comptes
+
+L'onglet **Comptes** du back office utilise une Edge Function Supabase sécurisée.
+
+### Prérequis
+
+```bash
+npm install -g supabase
+supabase login
+```
+
+### Déploiement
+
+```bash
+cd react-app
+supabase link --project-ref dzzkqlwdlzooejehufep   # l'ID de votre projet
+supabase functions deploy manage-users
+```
+
+C'est tout — les variables `SUPABASE_URL`, `SUPABASE_ANON_KEY` et `SUPABASE_SERVICE_ROLE_KEY` sont injectées automatiquement par Supabase dans la fonction. Aucune variable à configurer manuellement.
+
+### Vérification
+
+Après déploiement, l'URL de la fonction est :
+```
+https://dzzkqlwdlzooejehufep.supabase.co/functions/v1/manage-users
+```
+
+Un appel `GET` sans token doit retourner `401`. Un appel avec un token valide doit retourner la liste des comptes.
+
+---
+
 
 - [ ] La page d'accueil s'affiche
 - [ ] `/mentions-legales` et `/confidentialite` répondent (test du routage)

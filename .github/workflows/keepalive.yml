@@ -1,0 +1,17 @@
+name: Supabase Keepalive Cron
+
+on:
+  schedule:
+    # S'exécute tous les jours à 03h00 UTC (04h00 / 05h00 heure de Paris)
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Permet de le lancer manuellement depuis l'interface GitHub si besoin
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Envoyer un ping à Supabase
+        run: |
+          curl -sS -X GET 'https://dzzkqlwdlzooejehufep.supabase.co/rest/v1/domaines?select=id&limit=1' \
+          -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6emtxbHdkbHpvb2VqZWh1ZmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjk5MzcsImV4cCI6MjEwMTcwNTkzN30.SbKXAKa-NL6zHdvBH8dp1ThFuMZJJGTEtvMB9VErDns' \
+          -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6emtxbHdkbHpvb2VqZWh1ZmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMjk5MzcsImV4cCI6MjEwMTcwNTkzN30.SbKXAKa-NL6zHdvBH8dp1ThFuMZJJGTEtvMB9VErDns'

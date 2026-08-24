@@ -132,7 +132,7 @@ Le site est hébergé par **IONOS SARL**, dont les serveurs sont situés dans l'
       },
       {
         titre: "Durée de conservation",
-        corps: `Les données transmises via le formulaire sont conservées le temps nécessaire au traitement de votre demande. En l'absence de suite, elles sont supprimées dans un délai maximal de [à compléter : durée, ex. 3 ans]. En cas d'ouverture d'un dossier, les données sont conservées conformément aux obligations légales de conservation applicables à la profession d'avocat.`,
+        corps: `Les données transmises via le formulaire sont conservées le temps nécessaire au traitement de votre demande. En l'absence de suite, elles sont supprimées dans un délai maximal de **3 ans**. En cas d'ouverture d'un dossier, les données sont conservées conformément aux obligations légales de conservation applicables à la profession d'avocat.`,
       },
       {
         titre: "Transfert hors de l'Union européenne",

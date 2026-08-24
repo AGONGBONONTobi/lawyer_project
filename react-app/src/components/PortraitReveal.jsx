@@ -14,12 +14,6 @@ import Reveal from "./Reveal";
  */
 const ENGAGEMENTS = [
   {
-    valeur: "48 h",
-    titre: "Délai de réponse",
-    texte:
-      "Toute première demande reçoit une réponse sous deux jours ouvrés, par téléphone ou par écrit.",
-  },
-  {
     valeur: "Paris 17ᵉ",
     titre: "Sur place ou à distance",
     texte:

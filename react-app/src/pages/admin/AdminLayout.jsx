@@ -5,6 +5,7 @@ import { useSession } from "../../lib/useSession";
 const ONGLETS = [
   { to: "/admin/domaines", libelle: "Domaines d'expertise" },
   { to: "/admin/pages-legales", libelle: "Pages légales" },
+  { to: "/admin/comptes", libelle: "Comptes" },
 ];
 
 /** Encadrement commun des écrans d'administration : en-tête, largeur, déconnexion. */

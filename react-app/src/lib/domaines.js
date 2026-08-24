@@ -37,7 +37,7 @@ export const DOMAINES_PAR_DEFAUT = [
     img: "/assets/img/droit-famille.jpg",
   },
   {
-    slug: "etrangers",
+    slug: "droit-etrangers",
     domain: "Droit des étrangers",
     subtitle: "Visa · naturalisation · OQTF",
     points: [
@@ -45,7 +45,7 @@ export const DOMAINES_PAR_DEFAUT = [
       "Recours contre OQTF et refus de visa",
       "Procédures de naturalisation",
     ],
-    img: "/assets/img/notre-dame.jpg",
+    img: "/assets/img/tribunal-administratif.jpg",
   },
 ];
 

@@ -1,0 +1,11 @@
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3001
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.3s
+ ✓ Compiled /src/middleware in 113ms (124 modules)
+ ○ Compiling /[lang]/tool/[id] ...
+ ✓ Compiled /[lang]/tool/[id] in 2.9s (1573 modules)
+ ✓ Compiled in 347ms (780 modules)
+ GET /fr/tool/diagnostic-de-l-experience-client 404 in 21177ms

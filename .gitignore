@@ -2,6 +2,8 @@
 react-app/dist/
 
 # Dependencies
+node_modules/
+.next/
 react-app/node_modules/
 
 # Environment files
