@@ -77,8 +77,24 @@ export default function Contact({ sectionRef }) {
     const sujet     = form.elements["subject"].value;
     const message   = form.elements["message"].value.trim();
 
+    // Validation expressions régulières
+    // Nom : lettres (y compris accents), espaces, tirets, apostrophes
+    const nameRegex = /^[a-zA-ZÀ-ÿ\s\-']+$/;
+    // Téléphone : chiffres, plus, espaces, points, tirets (8 à 20 caractères max)
+    const phoneRegex = /^[+0-9\s.\-]{8,20}$/;
+
     if (!nom || !email || !message) {
       setStatus({ text: "Merci de renseigner votre nom, votre email et votre message.", kind: "is-error" });
+      return;
+    }
+
+    if (!nameRegex.test(nom)) {
+      setStatus({ text: "Le nom ne doit contenir que des lettres, des espaces ou des tirets.", kind: "is-error" });
+      return;
+    }
+
+    if (telephone && !phoneRegex.test(telephone)) {
+      setStatus({ text: "Le numéro de téléphone n'est pas valide.", kind: "is-error" });
       return;
     }
 
