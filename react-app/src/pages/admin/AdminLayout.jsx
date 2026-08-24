@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { supabase, isSupabaseConfigured } from "../../lib/supabase";
 import { useSession } from "../../lib/useSession";
@@ -118,6 +119,35 @@ export function RequireAuth({ children }) {
       </div>
     );
   }
+
+  // Dans RequireAuth, ajout du timer d'inactivité
+  useEffect(() => {
+    if (!session) return;
+    let timeoutId;
+    
+    const resetTimer = () => {
+      clearTimeout(timeoutId);
+      // Déconnexion automatique après 15 minutes d'inactivité
+      timeoutId = setTimeout(() => {
+        supabase?.auth.signOut();
+      }, 15 * 60 * 1000);
+    };
+
+    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("keydown", resetTimer);
+    window.addEventListener("scroll", resetTimer);
+    window.addEventListener("click", resetTimer);
+
+    resetTimer();
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("mousemove", resetTimer);
+      window.removeEventListener("keydown", resetTimer);
+      window.removeEventListener("scroll", resetTimer);
+      window.removeEventListener("click", resetTimer);
+    };
+  }, [session]);
 
   if (!session) {
     return <Navigate to="/admin/connexion" replace state={{ from: location.pathname }} />;
