@@ -96,31 +96,7 @@ export function RequireAuth({ children }) {
   const { session, chargement } = useSession();
   const location = useLocation();
 
-  if (!isSupabaseConfigured) {
-    return (
-      <div className="admin grid min-h-screen place-items-center bg-[#F7F5F1] px-6">
-        <div className="max-w-lg rounded-sm border border-[#E0E0E0] bg-white p-8 text-center">
-          <h1 className="font-serif text-2xl">Back office non configuré</h1>
-          <p className="mt-3 text-sm leading-relaxed text-[#595959]">
-            Les variables <code className="rounded bg-[#F2F2F2] px-1">VITE_SUPABASE_URL</code> et{" "}
-            <code className="rounded bg-[#F2F2F2] px-1">VITE_SUPABASE_ANON_KEY</code> sont absentes
-            de l'environnement. Le site public continue de fonctionner avec les domaines livrés par
-            défaut ; seule l'administration est indisponible.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (chargement) {
-    return (
-      <div className="grid min-h-screen place-items-center bg-[#F7F5F1]">
-        <p className="text-sm text-[#595959]">Chargement…</p>
-      </div>
-    );
-  }
-
-  // Dans RequireAuth, ajout du timer d'inactivité
+  // Dans RequireAuth, ajout du timer d'inactivité (placé avant les retours conditionnels pour respecter les Rules of Hooks)
   useEffect(() => {
     if (!session) return;
     let timeoutId;
@@ -148,6 +124,31 @@ export function RequireAuth({ children }) {
       window.removeEventListener("click", resetTimer);
     };
   }, [session]);
+
+  if (!isSupabaseConfigured) {
+    return (
+      <div className="admin grid min-h-screen place-items-center bg-[#F7F5F1] px-6">
+        <div className="max-w-lg rounded-sm border border-[#E0E0E0] bg-white p-8 text-center">
+          <h1 className="font-serif text-2xl">Back office non configuré</h1>
+          <p className="mt-3 text-sm leading-relaxed text-[#595959]">
+            Les variables <code className="rounded bg-[#F2F2F2] px-1">VITE_SUPABASE_URL</code> et{" "}
+            <code className="rounded bg-[#F2F2F2] px-1">VITE_SUPABASE_ANON_KEY</code> sont absentes
+            de l'environnement. Le site public continue de fonctionner avec les domaines livrés par
+            défaut ; seule l'administration est indisponible.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (chargement) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-[#F7F5F1]">
+        <p className="text-sm text-[#595959]">Chargement…</p>
+      </div>
+    );
+  }
+
 
   if (!session) {
     return <Navigate to="/admin/connexion" replace state={{ from: location.pathname }} />;
