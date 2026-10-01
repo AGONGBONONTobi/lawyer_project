@@ -7,7 +7,6 @@ import Confidentialite from "./pages/Confidentialite";
 import Connexion from "./pages/admin/Connexion";
 import Domaines from "./pages/admin/Domaines";
 import PagesLegales from "./pages/admin/PagesLegales";
-import Comptes from "./pages/admin/Comptes";
 import { RequireAuth } from "./pages/admin/AdminLayout";
 
 function App() {
@@ -35,14 +34,6 @@ function App() {
           element={
             <RequireAuth>
               <PagesLegales />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/admin/comptes"
-          element={
-            <RequireAuth>
-              <Comptes />
             </RequireAuth>
           }
         />

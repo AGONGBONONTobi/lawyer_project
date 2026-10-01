@@ -54,7 +54,7 @@ export default function Honoraires({ sectionRef }) {
                 les solutions envisageables.
               </p>
               <div className="fee-slip-price">
-                <span className="price">130&nbsp;€</span>
+                <span className="price">150&nbsp;€</span>
                 <span className="price-detail">
                   TTC · 1 heure<br />Présentiel ou visioconférence
                 </span>
