@@ -34,26 +34,16 @@ async function envoyerRequeteEmailJS(serviceId, templateParams) {
 }
 
 async function envoyerAvecEmailJS({ nom, email, telephone, sujet, message }) {
-  const messageComplet = [
-    `Objet : ${sujet}`,
-    `Nom : ${nom}`,
-    `Email : ${email}`,
-    `Téléphone : ${telephone || "Non renseigné"}`,
-    "",
-    "Message :",
-    message,
-  ].join("\n");
-
   const templateParams = {
     to_name: "Maître Badirou",
-    from_name: `${nom} (${sujet})`,
+    from_name: nom,
     name: nom,
     email: email,
     from_email: email,
     reply_to: email,
     phone: telephone || "Non renseigné",
     subject: sujet,
-    message: messageComplet,
+    message: message,
     to_email: DESTINATAIRE,
   };
 
