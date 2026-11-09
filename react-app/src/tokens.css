@@ -1,0 +1,62 @@
+/* Palette du cabinet : blanc, gris bleuté et bleu encre. */
+:root {
+  /* Primitives */
+  --slate-50: #ffffff;
+  --slate-100: #f4f7fa;
+  --slate-200: #e6edf2;
+  --slate-300: #245579;
+  --slate-400: #193e5b;
+  --blue-600: #386785;
+  --blue-700: #245579;
+  --blue-800: #17394f;
+  --navy-ink: #192d3b;
+  --slate-muted: #485d6b;
+
+  --patina-pale: #e3eee9;
+  --patina-ink: #365e52;
+
+  /* Usages */
+  --text: var(--navy-ink);
+  --parchment: var(--slate-50);
+  --parchment-warm: var(--slate-100);
+  --parchment-deep: var(--slate-200);
+  --ribbon: var(--slate-300);
+  --ribbon-dark: var(--slate-400);
+  --on-ribbon: white;
+  --ribbon-on-dark: var(--slate-100);
+  --accent-ink: var(--blue-700);
+  --accent-rgb: 36 85 121;
+  --muted-ink: var(--slate-muted);
+  --line: #c9d4dc;
+  --field-line: #677e8e;
+  --ink-fixed: var(--blue-800);
+  --paper-fixed: var(--slate-50);
+  --background: var(--parchment);
+  --foreground: var(--text);
+  --card: var(--parchment);
+  --card-foreground: var(--text);
+  --primary: var(--ribbon);
+  --primary-foreground: var(--on-ribbon);
+  --secondary: var(--slate-200);
+  --secondary-foreground: var(--text);
+  --muted: var(--slate-100);
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--slate-200);
+  --accent-foreground: var(--text);
+  --border: var(--line);
+  --ring: var(--accent-ink);
+
+  /* Compatibilité des anciens composants : ces jetons ne sont plus dorés. */
+  --gold: var(--accent-ink);
+  --gold-light: var(--slate-200);
+  --gold-ink: var(--accent-ink);
+  --gold-pale: rgb(var(--accent-rgb) / .06);
+  --gold-border: rgb(var(--accent-rgb) / .24);
+
+  /* Panneau posé sur la photographie. */
+  --panel-bg: rgb(255 255 255 / .94);
+  --panel-border: rgb(201 212 220 / .8);
+  --button-bg: var(--ribbon);
+  --button-fg: var(--on-ribbon);
+  --button-bg-hover: var(--ribbon-dark);
+}

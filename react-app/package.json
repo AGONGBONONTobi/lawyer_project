@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.js",
+    "security:source": "git -C .. ls-files -z --cached --others --exclude-standard | node security/check-secrets.mjs source",
+    "security:dist": "node security/check-secrets.mjs dist",
+    "check": "npm run security:source && npm test && npm run lint && npm run build && npm run security:dist",
+    "dev:setup": "bash scripts/start-local.sh"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",

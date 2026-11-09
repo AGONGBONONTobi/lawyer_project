@@ -58,7 +58,17 @@
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  # Socle appliqué sans bloquer Motion, Google Fonts ou les appels existants.
+  Header always set Content-Security-Policy "base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'"
+  # Politique complète à contrôler en préproduction avant de la rendre bloquante.
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.emailjs.com; frame-src 'none'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'"
 </IfModule>
+
+<FilesMatch "(?i)^(?:\.env(?:\..*)?|\.git.*|package(?:-lock)?\.json|.*\.(?:sql|log|ya?ml|bak))$">
+  Require all denied
+</FilesMatch>
 
 # ---------------------------------------------------------------- compression
 <IfModule mod_deflate.c>

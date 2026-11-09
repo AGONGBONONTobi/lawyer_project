@@ -117,7 +117,7 @@ export default function Domaines() {
         <button
           type="button"
           onClick={() => setEdite({ ...VIDE })}
-          className="rounded-sm bg-[#B8975A] px-4 py-2 text-sm font-semibold text-[#1a140a] hover:bg-[#C9A96E]"
+          className="rounded-sm bg-[var(--ribbon)] px-4 py-2 text-sm font-semibold text-[var(--on-ribbon)] hover:bg-[var(--ribbon-dark)]"
         >
           Ajouter un domaine
         </button>
@@ -135,7 +135,7 @@ export default function Domaines() {
       )}
 
       {chargement ? (
-        <p className="text-sm text-[#595959]">Chargement des domaines…</p>
+        <p className="text-sm text-[var(--muted-ink)]">Chargement des domaines…</p>
       ) : domaines.length === 0 && erreur ? (
         // Liste vide *parce que* la lecture a échoué : le message d'erreur
         // ci-dessus suffit. Afficher l'état vide laisserait croire que la base
@@ -143,13 +143,13 @@ export default function Domaines() {
         <button
           type="button"
           onClick={charger}
-          className="rounded-sm border border-[#E0E0E0] bg-white px-4 py-2 text-sm hover:border-[#B8975A]"
+          className="rounded-sm border border-[var(--line)] bg-white px-4 py-2 text-sm hover:border-[var(--ribbon)]"
         >
           Réessayer
         </button>
       ) : domaines.length === 0 ? (
-        <div className="rounded-sm border border-dashed border-[#E0E0E0] bg-white p-10 text-center">
-          <p className="text-sm text-[#595959]">
+        <div className="rounded-sm border border-dashed border-[var(--line)] bg-white p-10 text-center">
+          <p className="text-sm text-[var(--muted-ink)]">
             Aucun domaine enregistré. Le site affiche pour l'instant les trois domaines livrés par
             défaut.
           </p>
@@ -160,7 +160,7 @@ export default function Domaines() {
             <li
               key={d.id}
               className={`flex flex-wrap items-center gap-4 rounded-sm border bg-white p-4 ${
-                d.visible ? "border-[#E0E0E0]" : "border-dashed border-[#D6C9A8] bg-[#FDFAF5]"
+                d.visible ? "border-[var(--line)]" : "border-dashed border-[#D6C9A8] bg-[#FDFAF5]"
               }`}
             >
               <div className="flex flex-col gap-1">
@@ -169,7 +169,7 @@ export default function Domaines() {
                   onClick={() => deplacer(i, -1)}
                   disabled={i === 0}
                   aria-label={`Monter ${d.domain}`}
-                  className="h-6 w-6 rounded-sm border border-[#E0E0E0] text-xs leading-none disabled:opacity-30"
+                  className="h-6 w-6 rounded-sm border border-[var(--line)] text-xs leading-none disabled:opacity-30"
                 >
                   ↑
                 </button>
@@ -178,7 +178,7 @@ export default function Domaines() {
                   onClick={() => deplacer(i, 1)}
                   disabled={i === domaines.length - 1}
                   aria-label={`Descendre ${d.domain}`}
-                  className="h-6 w-6 rounded-sm border border-[#E0E0E0] text-xs leading-none disabled:opacity-30"
+                  className="h-6 w-6 rounded-sm border border-[var(--line)] text-xs leading-none disabled:opacity-30"
                 >
                   ↓
                 </button>
@@ -194,15 +194,15 @@ export default function Domaines() {
                   }}
                 />
               ) : (
-                <div className="grid h-16 w-24 flex-none place-items-center rounded-sm bg-[#F2F2F2] text-[10px] text-[#595959]">
+                <div className="grid h-16 w-24 flex-none place-items-center rounded-sm bg-[var(--parchment-deep)] text-[10px] text-[var(--muted-ink)]">
                   sans image
                 </div>
               )}
 
               <div className="min-w-[12rem] flex-1">
                 <p className="font-serif text-lg">{d.domain}</p>
-                <p className="text-sm text-[#595959]">{d.subtitle}</p>
-                <p className="mt-1 text-xs text-[#595959]">
+                <p className="text-sm text-[var(--muted-ink)]">{d.subtitle}</p>
+                <p className="mt-1 text-xs text-[var(--muted-ink)]">
                   {d.points.length} point{d.points.length > 1 ? "s" : ""}
                   {!d.visible && " · masqué du site"}
                 </p>
@@ -212,21 +212,21 @@ export default function Domaines() {
                 <button
                   type="button"
                   onClick={() => basculerVisibilite(d)}
-                  className="rounded-sm border border-[#E0E0E0] px-3 py-1.5 text-sm hover:border-[#B8975A]"
+                  className="rounded-sm border border-[var(--line)] px-3 py-1.5 text-sm hover:border-[var(--ribbon)]"
                 >
                   {d.visible ? "Masquer" : "Afficher"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setEdite({ ...d, points: [...d.points] })}
-                  className="rounded-sm border border-[#B8975A] px-3 py-1.5 text-sm text-[#8A6E2A] hover:bg-[#FDFAF5]"
+                  className="rounded-sm border border-[var(--ribbon)] px-3 py-1.5 text-sm text-[var(--accent-ink)] hover:bg-[var(--muted)]"
                 >
                   Modifier
                 </button>
                 <button
                   type="button"
                   onClick={() => supprimer(d)}
-                  className="rounded-sm border border-[#E0E0E0] px-3 py-1.5 text-sm text-[#C0392B] hover:border-[#C0392B]"
+                  className="rounded-sm border border-[var(--line)] px-3 py-1.5 text-sm text-[#C0392B] hover:border-[#C0392B]"
                 >
                   Supprimer
                 </button>
@@ -363,7 +363,7 @@ function FormulaireDomaine({ valeur, onFermer, onEnregistrer }) {
                     setBrouillon((b) => ({ ...b, points: b.points.filter((_, j) => j !== i) }))
                   }
                   aria-label={`Retirer le point ${i + 1}`}
-                  className="flex-none rounded-sm border border-[#E0E0E0] px-3 text-sm text-[#595959] hover:border-[#C0392B] hover:text-[#C0392B]"
+                  className="flex-none rounded-sm border border-[var(--line)] px-3 text-sm text-[var(--muted-ink)] hover:border-[#C0392B] hover:text-[#C0392B]"
                 >
                   ×
                 </button>
@@ -372,7 +372,7 @@ function FormulaireDomaine({ valeur, onFermer, onEnregistrer }) {
             <button
               type="button"
               onClick={() => setBrouillon((b) => ({ ...b, points: [...b.points, ""] }))}
-              className="text-sm text-[#8A6E2A] underline underline-offset-4"
+              className="text-sm text-[var(--accent-ink)] underline underline-offset-4"
             >
               + Ajouter un point
             </button>
@@ -391,7 +391,7 @@ function FormulaireDomaine({ valeur, onFermer, onEnregistrer }) {
                 className="h-24 w-36 flex-none rounded-sm object-cover"
               />
             ) : (
-              <div className="grid h-24 w-36 flex-none place-items-center rounded-sm bg-[#F2F2F2] text-xs text-[#595959]">
+              <div className="grid h-24 w-36 flex-none place-items-center rounded-sm bg-[var(--parchment-deep)] text-xs text-[var(--muted-ink)]">
                 aucune image
               </div>
             )}
@@ -402,16 +402,16 @@ function FormulaireDomaine({ valeur, onFermer, onEnregistrer }) {
                 accept="image/jpeg,image/png,image/webp,image/avif"
                 onChange={choisirImage}
                 disabled={televersement}
-                className="block w-full text-sm file:mr-3 file:rounded-sm file:border file:border-[#E0E0E0] file:bg-white file:px-3 file:py-1.5 file:text-sm"
+                className="block w-full text-sm file:mr-3 file:rounded-sm file:border file:border-[var(--line)] file:bg-white file:px-3 file:py-1.5 file:text-sm"
               />
-              {televersement && <p className="mt-2 text-sm text-[#595959]">Téléversement…</p>}
+              {televersement && <p className="mt-2 text-sm text-[var(--muted-ink)]">Téléversement…</p>}
               <input
                 value={brouillon.img}
                 onChange={(e) => set("img", e.target.value)}
                 placeholder="/assets/img/droit-famille.jpg"
                 className={`${inputClass} mt-2 text-xs`}
               />
-              <p className="mt-1 text-xs text-[#595959]">
+              <p className="mt-1 text-xs text-[var(--muted-ink)]">
                 Vous pouvez aussi coller un chemin existant du site.
               </p>
             </div>
@@ -438,14 +438,14 @@ function FormulaireDomaine({ valeur, onFermer, onEnregistrer }) {
           <button
             type="button"
             onClick={onFermer}
-            className="rounded-sm border border-[#E0E0E0] px-4 py-2 text-sm hover:border-[#111]"
+            className="rounded-sm border border-[var(--line)] px-4 py-2 text-sm hover:border-[var(--text)]"
           >
             Annuler
           </button>
           <button
             type="submit"
             disabled={envoi || televersement}
-            className="rounded-sm bg-[#B8975A] px-5 py-2 text-sm font-semibold text-[#1a140a] hover:bg-[#C9A96E] disabled:opacity-60"
+            className="rounded-sm bg-[var(--ribbon)] px-5 py-2 text-sm font-semibold text-[var(--on-ribbon)] hover:bg-[var(--ribbon-dark)] disabled:opacity-60"
           >
             {envoi ? "Enregistrement…" : "Enregistrer"}
           </button>
@@ -456,13 +456,13 @@ function FormulaireDomaine({ valeur, onFermer, onEnregistrer }) {
 }
 
 const inputClass =
-  "w-full rounded-sm border border-[#E0E0E0] px-3 py-2 text-sm outline-none focus:border-[#B8975A]";
+  "w-full rounded-sm border border-[var(--line)] px-3 py-2 text-sm outline-none focus:border-[var(--ribbon)]";
 
 function Champ({ label, aide, children }) {
   return (
     <div className="mt-6">
       <p className="text-sm font-medium">{label}</p>
-      {aide && <p className="mb-1.5 text-xs text-[#595959]">{aide}</p>}
+      {aide && <p className="mb-1.5 text-xs text-[var(--muted-ink)]">{aide}</p>}
       {children}
     </div>
   );

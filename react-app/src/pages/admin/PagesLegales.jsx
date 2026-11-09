@@ -75,10 +75,10 @@ export default function PagesLegales() {
       )}
 
       {chargement ? (
-        <p className="text-sm text-[#595959]">Chargement…</p>
+        <p className="text-sm text-[var(--muted-ink)]">Chargement…</p>
       ) : tableAbsente ? null : pages.length === 0 ? (
-        <div className="rounded-sm border border-dashed border-[#E0E0E0] bg-white p-10 text-center">
-          <p className="mx-auto max-w-lg text-sm leading-relaxed text-[#595959]">
+        <div className="rounded-sm border border-dashed border-[var(--line)] bg-white p-10 text-center">
+          <p className="mx-auto max-w-lg text-sm leading-relaxed text-[var(--muted-ink)]">
             Aucune version enregistrée en base. Le site affiche pour l'instant le contenu livré avec
             lui — les pages sont donc bien en ligne. Importez ce contenu pour pouvoir le modifier
             depuis cet écran.
@@ -86,7 +86,7 @@ export default function PagesLegales() {
           <button
             type="button"
             onClick={importer}
-            className="mt-6 rounded-sm bg-[#B8975A] px-5 py-2 text-sm font-semibold text-[#1a140a] hover:bg-[#C9A96E]"
+            className="mt-6 rounded-sm bg-[var(--ribbon)] px-5 py-2 text-sm font-semibold text-[var(--on-ribbon)] hover:bg-[var(--ribbon-dark)]"
           >
             Importer le contenu actuel
           </button>
@@ -98,11 +98,11 @@ export default function PagesLegales() {
             return (
               <li
                 key={p.slug}
-                className="flex flex-wrap items-center gap-4 rounded-sm border border-[#E0E0E0] bg-white p-4"
+                className="flex flex-wrap items-center gap-4 rounded-sm border border-[var(--line)] bg-white p-4"
               >
                 <div className="min-w-[14rem] flex-1">
                   <p className="font-serif text-lg">{p.titre}</p>
-                  <p className="text-sm text-[#595959]">
+                  <p className="text-sm text-[var(--muted-ink)]">
                     /{p.slug} · {p.sections.length} section{p.sections.length > 1 ? "s" : ""}
                     {p.maj && ` · mise à jour ${p.maj}`}
                   </p>
@@ -117,14 +117,14 @@ export default function PagesLegales() {
                     href={`/${p.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-sm border border-[#E0E0E0] px-3 py-1.5 text-sm hover:border-[#B8975A]"
+                    className="rounded-sm border border-[var(--line)] px-3 py-1.5 text-sm hover:border-[var(--ribbon)]"
                   >
                     Voir la page
                   </a>
                   <button
                     type="button"
                     onClick={() => setSlugOuvert(p.slug)}
-                    className="rounded-sm border border-[#B8975A] px-3 py-1.5 text-sm text-[#8A6E2A] hover:bg-[#FDFAF5]"
+                    className="rounded-sm border border-[var(--ribbon)] px-3 py-1.5 text-sm text-[var(--accent-ink)] hover:bg-[var(--muted)]"
                   >
                     Modifier
                   </button>
@@ -136,7 +136,7 @@ export default function PagesLegales() {
       )}
 
       {pages.length > 0 && (
-        <p className="mt-6 text-xs leading-relaxed text-[#595959]">
+        <p className="mt-6 text-xs leading-relaxed text-[var(--muted-ink)]">
           Besoin de repartir du texte d'origine ?{" "}
           <button type="button" onClick={importer} className="underline underline-offset-2">
             Réimporter le contenu livré
@@ -217,11 +217,11 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
     >
       <form onSubmit={soumettre} className="mx-auto max-w-3xl rounded-sm bg-white p-6 shadow-xl sm:p-8">
         <h2 className="font-serif text-2xl">{page.titre}</h2>
-        <p className="mt-2 text-sm text-[#595959]">
-          Mise en forme : <code className="rounded bg-[#F2F2F2] px-1">**gras**</code>,{" "}
-          <code className="rounded bg-[#F2F2F2] px-1">[libellé](https://…)</code>, une ligne
-          commençant par <code className="rounded bg-[#F2F2F2] px-1">-</code> pour une puce,{" "}
-          <code className="rounded bg-[#F2F2F2] px-1">&gt;</code> pour une remarque discrète. Une
+        <p className="mt-2 text-sm text-[var(--muted-ink)]">
+          Mise en forme : <code className="rounded bg-[var(--parchment-deep)] px-1">**gras**</code>,{" "}
+          <code className="rounded bg-[var(--parchment-deep)] px-1">[libellé](https://…)</code>, une ligne
+          commençant par <code className="rounded bg-[var(--parchment-deep)] px-1">-</code> pour une puce,{" "}
+          <code className="rounded bg-[var(--parchment-deep)] px-1">&gt;</code> pour une remarque discrète. Une
           ligne vide sépare deux paragraphes.
         </p>
 
@@ -247,7 +247,7 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
 
         <div className="mt-8 space-y-6">
           {brouillon.sections.map((s, i) => (
-            <div key={i} className="rounded-sm border border-[#E0E0E0] p-4">
+            <div key={i} className="rounded-sm border border-[var(--line)] p-4">
               <div className="flex items-start gap-3">
                 <div className="flex flex-col gap-1 pt-1">
                   <button
@@ -255,7 +255,7 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
                     onClick={() => deplacer(i, -1)}
                     disabled={i === 0}
                     aria-label="Monter la section"
-                    className="h-6 w-6 rounded-sm border border-[#E0E0E0] text-xs leading-none disabled:opacity-30"
+                    className="h-6 w-6 rounded-sm border border-[var(--line)] text-xs leading-none disabled:opacity-30"
                   >
                     ↑
                   </button>
@@ -264,7 +264,7 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
                     onClick={() => deplacer(i, 1)}
                     disabled={i === brouillon.sections.length - 1}
                     aria-label="Descendre la section"
-                    className="h-6 w-6 rounded-sm border border-[#E0E0E0] text-xs leading-none disabled:opacity-30"
+                    className="h-6 w-6 rounded-sm border border-[var(--line)] text-xs leading-none disabled:opacity-30"
                   >
                     ↓
                   </button>
@@ -288,7 +288,7 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
                     <button
                       type="button"
                       onClick={() => setApercu(apercu === i ? null : i)}
-                      className="text-[#8A6E2A] underline underline-offset-2"
+                      className="text-[var(--accent-ink)] underline underline-offset-2"
                     >
                       {apercu === i ? "Masquer l'aperçu" : "Aperçu"}
                     </button>
@@ -325,7 +325,7 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
           onClick={() =>
             setBrouillon((b) => ({ ...b, sections: [...b.sections, { titre: "", corps: "" }] }))
           }
-          className="mt-4 text-sm text-[#8A6E2A] underline underline-offset-4"
+          className="mt-4 text-sm text-[var(--accent-ink)] underline underline-offset-4"
         >
           + Ajouter une section
         </button>
@@ -340,14 +340,14 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
           <button
             type="button"
             onClick={onFermer}
-            className="rounded-sm border border-[#E0E0E0] px-4 py-2 text-sm hover:border-[#111]"
+            className="rounded-sm border border-[var(--line)] px-4 py-2 text-sm hover:border-[var(--text)]"
           >
             Annuler
           </button>
           <button
             type="submit"
             disabled={envoi}
-            className="rounded-sm bg-[#B8975A] px-5 py-2 text-sm font-semibold text-[#1a140a] hover:bg-[#C9A96E] disabled:opacity-60"
+            className="rounded-sm bg-[var(--ribbon)] px-5 py-2 text-sm font-semibold text-[var(--on-ribbon)] hover:bg-[var(--ribbon-dark)] disabled:opacity-60"
           >
             {envoi ? "Enregistrement…" : "Enregistrer"}
           </button>
@@ -358,7 +358,7 @@ function EditeurPage({ page, onFermer, onEnregistre }) {
 }
 
 const champClass =
-  "w-full rounded-sm border border-[#E0E0E0] px-3 py-2 text-sm outline-none focus:border-[#B8975A]";
+  "w-full rounded-sm border border-[var(--line)] px-3 py-2 text-sm outline-none focus:border-[var(--ribbon)]";
 
 function lisible(err) {
   const brut = err?.message || String(err);

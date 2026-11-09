@@ -172,35 +172,17 @@ Le formulaire de contact utilise [EmailJS](https://www.emailjs.com/) pour envoye
 
 ---
 
-## 5c. Déployer l'Edge Function de gestion des comptes
+## 5c. Ancienne fonction de gestion des comptes
 
-L'onglet **Comptes** du back office utilise une Edge Function Supabase sécurisée.
+L’onglet Comptes a été retiré. Le code de `supabase/functions/manage-users`
+répond désormais **410 Gone**, sans charger de clé serveur ni gérer des comptes.
+Cette fermeture n’est effective à distance qu’après déploiement de cette version
+ou suppression de l’ancienne fonction dans Supabase. Aucun de ces changements
+n’a été appliqué automatiquement.
 
-### Prérequis
-
-```bash
-npm install -g supabase
-supabase login
-```
-
-### Déploiement
-
-```bash
-cd react-app
-supabase link --project-ref dzzkqlwdlzooejehufep   # l'ID de votre projet
-supabase functions deploy manage-users
-```
-
-C'est tout — les variables `SUPABASE_URL`, `SUPABASE_ANON_KEY` et `SUPABASE_SERVICE_ROLE_KEY` sont injectées automatiquement par Supabase dans la fonction. Aucune variable à configurer manuellement.
-
-### Vérification
-
-Après déploiement, l'URL de la fonction est :
-```
-https://dzzkqlwdlzooejehufep.supabase.co/functions/v1/manage-users
-```
-
-Un appel `GET` sans token doit retourner `401`. Un appel avec un token valide doit retourner la liste des comptes.
+La création des comptes reste une opération d’administration Supabase.
+Les préparatifs de CI/CD et de renforcement des droits sont détaillés dans
+[SECURITE_CICD.md](SECURITE_CICD.md).
 
 ---
 
@@ -226,3 +208,19 @@ Chaque modification du site demande un nouveau `npm run build` puis un nouveau
 dépôt de `dist/`. **Les contenus gérés depuis le back office — domaines
 d'expertise, images — n'en font pas partie** : ils vivent dans Supabase et sont
 modifiables par le cabinet à tout moment, sans redéploiement.
+
+## Agenda des Bilans
+
+En préproduction, appliquer `supabase/agenda.sql` avec le compte propriétaire,
+puis inscrire l’UUID Auth vérifié du compte du cabinet dans
+`cabinet_security.admins(user_id)`. Si le durcissement MFA est activé,
+l’agenda exige également la session renforcée. La migration ne publie aucun horaire.
+
+Depuis `/admin/agenda`, ouvrir un créneau de test en heure de Paris.
+Depuis une session visiteur, réserver ce Bilan, contrôler la confirmation,
+la disparition du créneau et son affichage nominatif dans l’administration.
+Vérifier aussi le refus d’accès avec un compte connecté absent de la liste.
+La réservation utilise Supabase. EmailJS sert uniquement au formulaire général.
+Si les pages légales sont personnalisées en base, y reporter la description du
+traitement des réservations. Avant l’ouverture publique, définir la purge des
+rendez-vous passés et la protection contre les réservations automatisées.

@@ -5,14 +5,14 @@ export default function Presentation({ sectionRef }) {
     <section className="section" id="presentation" ref={sectionRef}>
       <div className="container">
         <Reveal as="div" className="section-head">
-          <p className="eyebrow">Le dossier</p>
-          <h2>Un parcours pensé pour s'adapter à chaque situation</h2>
+          <p className="eyebrow">Le cabinet · Paris 17ᵉ</p>
+          <h2>Votre histoire, une stratégie à construire ensemble.</h2>
         </Reveal>
 
         <div className="presentation-grid">
           <Reveal as="div" className="presentation-text">
             <blockquote className="pull-quote">
-              <p>« Consciencieuse, à l'écoute et réactive, Maître Badirou défend vos intérêts avec rigueur et engagement. »</p>
+              <p>« Défendre avec rigueur, conseiller avec clarté et agir avec détermination. »</p>
             </blockquote>
 
             <p className="lede">
@@ -34,8 +34,10 @@ export default function Presentation({ sectionRef }) {
             </p>
 
             <p>
-              Elle intervient principalement en droit commercial, en droit de la famille et en droit des
-              étrangers, et parle couramment français, anglais et italien.
+              Elle accompagne les personnes qui souhaitent devenir françaises ou faire reconnaître
+              leur nationalité. Chaque dossier est suivi personnellement, avec une information
+              régulière sur les démarches et les décisions à prendre. Les rendez-vous sont possibles
+              en français, en anglais et en italien.
             </p>
           </Reveal>
 

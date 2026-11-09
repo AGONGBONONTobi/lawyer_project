@@ -42,19 +42,19 @@ export default function Connexion() {
   }
 
   return (
-    <div className="admin grid min-h-screen place-items-center bg-[#F7F5F1] px-6">
+    <div className="admin grid min-h-screen place-items-center bg-[var(--parchment-warm)] px-6">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-sm border border-[#B8975A] font-serif text-[#8A6E2A]">
+          <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-sm border border-[var(--ribbon)] font-serif text-[var(--accent-ink)]">
             MB
           </span>
           <h1 className="font-serif text-2xl">Administration</h1>
-          <p className="mt-2 text-sm text-[#595959]">Cabinet Moradéké Badirou</p>
+          <p className="mt-2 text-sm text-[var(--muted-ink)]">Cabinet Moradéké Badirou</p>
         </div>
 
         <form
           onSubmit={soumettre}
-          className="rounded-sm border border-[#E0E0E0] bg-white p-6 shadow-sm"
+          className="rounded-sm border border-[var(--line)] bg-white p-6 shadow-sm"
         >
           <label className="block text-sm font-medium" htmlFor="email">
             Adresse e-mail
@@ -66,7 +66,7 @@ export default function Connexion() {
             autoComplete="username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1.5 w-full rounded-sm border border-[#E0E0E0] px-3 py-2 text-sm outline-none focus:border-[#B8975A]"
+            className="mt-1.5 w-full rounded-sm border border-[var(--line)] px-3 py-2 text-sm outline-none focus:border-[var(--ribbon)]"
           />
 
           <label className="mt-5 block text-sm font-medium" htmlFor="mdp">
@@ -79,7 +79,7 @@ export default function Connexion() {
             autoComplete="current-password"
             value={motDePasse}
             onChange={(e) => setMotDePasse(e.target.value)}
-            className="mt-1.5 w-full rounded-sm border border-[#E0E0E0] px-3 py-2 text-sm outline-none focus:border-[#B8975A]"
+            className="mt-1.5 w-full rounded-sm border border-[var(--line)] px-3 py-2 text-sm outline-none focus:border-[var(--ribbon)]"
           />
 
           {erreur && (
@@ -91,13 +91,13 @@ export default function Connexion() {
           <button
             type="submit"
             disabled={envoi || !isSupabaseConfigured}
-            className="mt-6 w-full rounded-sm bg-[#B8975A] px-4 py-2.5 text-sm font-semibold tracking-wide text-[#1a140a] transition hover:bg-[#C9A96E] disabled:opacity-60"
+            className="mt-6 w-full rounded-sm bg-[var(--ribbon)] px-4 py-2.5 text-sm font-semibold tracking-wide text-[var(--on-ribbon)] transition hover:bg-[var(--ribbon-dark)] disabled:opacity-60"
           >
             {envoi ? "Connexion…" : "Se connecter"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-xs leading-relaxed text-[#595959]">
+        <p className="mt-6 text-center text-xs leading-relaxed text-[var(--muted-ink)]">
           Accès réservé au cabinet. En cas d'oubli du mot de passe, contactez la personne qui
           administre le site.
         </p>

@@ -6,11 +6,11 @@ export default function Competences({ sectionRef }) {
     <section className="section section-alt" id="competences" ref={sectionRef}>
       <div className="container">
         <Reveal as="div" className="section-head">
-          <p className="eyebrow">Domaines d'intervention</p>
-          <h2>Trois pratiques, une même exigence</h2>
+          <p className="eyebrow">Autres domaines</p>
+          <h2>Le cabinet vous accompagne aussi.</h2>
           <p className="section-intro">
-            Consciente que chaque situation est singulière, le cabinet vous accompagne avec une écoute attentive
-            et un suivi personnalisé, afin de répondre au mieux à vos besoins.
+            Titres de séjour, vie familiale et activité professionnelle : le cabinet
+            continue de vous conseiller et de vous défendre dans ses autres domaines d’intervention.
           </p>
         </Reveal>
         

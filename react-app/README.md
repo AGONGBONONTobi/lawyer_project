@@ -7,6 +7,7 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build
 npm run lint
+npm test         # tests du diagnostic nationalité
 ```
 
 ## Back office — domaines d'expertise
@@ -66,3 +67,17 @@ le dit explicitement à l'écran.
   des sélecteurs d'élément nus, qui l'emportent sur les classes utilitaires :
   restyler les champs d'administration avec des classes Tailwind ne
   fonctionnerait pas.
+
+## Nouvelle direction nationalité
+
+La refonte, les choix de couleurs, les contrôles et les points restant à raccorder
+sont détaillés dans [REFONTE.md](REFONTE.md).
+
+## Développement, CI et sécurité
+
+`npm run dev:setup` installe les versions verrouillées puis démarre Vite.
+`npm run check` exécute les tests, le lint, la compilation et les contrôles locaux
+de sécurité. La CI préparée ajoute `npm audit` avec accès au registre.
+
+Voir [SECURITE_CICD.md](SECURITE_CICD.md) pour les constats, les correctifs locaux,
+les prérequis de CD et le script RLS à ne pas activer avant le parcours MFA.

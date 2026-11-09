@@ -17,3 +17,6 @@ react-app/.env*
 # OS
 .DS_Store
 Thumbs.db
+
+# Documents de cadrage de la cliente, conservés localement.
+new_direction/

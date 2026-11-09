@@ -6,10 +6,13 @@ on:
     - cron: "*/10 * * * *"
   workflow_dispatch: # permet de lancer manuellement si besoin
 
+permissions: {}
+
 jobs:
   ping:
     name: Ping le site pour éviter l'inactivité
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
       - name: Ping badirou-avocat.fr
         run: |

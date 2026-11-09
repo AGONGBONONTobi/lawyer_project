@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import { Link } from "react-router-dom";
 
 export default function Hero({ sectionRef }) {
   return (
@@ -8,42 +9,33 @@ export default function Hero({ sectionRef }) {
         {/* ── Colonne gauche : texte ───────────────────────────── */}
         <div className="hero-text">
           <Reveal as="p" className="eyebrow">
-            Avocate — Barreau de Paris
+            Maître Moradéké Badirou · Barreau de Paris
           </Reveal>
 
           <Reveal as="h1" className="hero-title" delay="1">
-            Maître<br />Moradéké<br />Badirou
+            Devenez français.<br /><em>Ou vérifiez si vous l’êtes déjà.</em>
           </Reveal>
 
           {/* Domaines — style liste verticale façon fashion hero */}
-          <Reveal
-            as="ul"
-            className="hero-domains"
-            delay="2"
-            aria-label="Domaines d'intervention"
-          >
-            <li>Droit commercial</li>
-            <li>Droit de la famille</li>
-            <li>Droit des étrangers</li>
+          <Reveal as="p" className="hero-specialty" delay="2">
+            Avocate en droit des étrangers et de la nationalité
           </Reveal>
 
           {/* Description + CTA en bas */}
           <Reveal as="div" className="hero-bottom" delay="3">
             <p className="hero-lead">
-              Consciencieuse, à l'écoute et réactive, Maître Badirou défend vos
-              intérêts avec rigueur et engagement.
+              Naturalisation, liens familiaux, nationalité à faire reconnaître.
+              Identifions la voie adaptée à votre histoire, avant de constituer votre dossier.
             </p>
             <div className="hero-actions">
-              <a className="btn btn-primary" href="#contact">
-                Prendre rendez-vous
-              </a>
-              <a className="btn btn-outline" href="tel:0671429695">
-                <svg className="icon" aria-hidden="true">
-                  <use href="#icon-phone" />
-                </svg>
-                06 71 42 96 95
+              <Link className="btn btn-primary" to="/diagnostic">
+                Faire mon diagnostic gratuit <span aria-hidden="true">↗</span>
+              </Link>
+              <a className="btn btn-outline" href="#contact">
+                Réserver un Bilan nationalité
               </a>
             </div>
+            <p className="hero-note">12 questions · Environ 3 minutes · Sans engagement</p>
           </Reveal>
         </div>
 
@@ -53,6 +45,9 @@ export default function Hero({ sectionRef }) {
             <img
               src="/assets/img/moradeke-badirou-portrait.jpg"
               alt="Portrait de Maître Moradéké Badirou"
+              width="640"
+              height="853"
+              fetchPriority="high"
             />
             <span className="hero-photo-accent" aria-hidden="true" />
           </div>

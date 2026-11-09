@@ -103,7 +103,7 @@ Le médiateur compétent pour la profession d'avocat est :
       },
       {
         titre: "Données collectées",
-        corps: `Les données personnelles sont collectées uniquement lorsque vous remplissez le formulaire de contact. Sont alors recueillis :
+        corps: `Les données personnelles sont collectées lors de la réservation d’un Bilan ou lors d’une demande de contact. Pour une réservation, le cabinet enregistre dans son agenda privé hébergé sur Supabase votre nom, votre adresse e-mail, le créneau et le choix cabinet ou visio afin de gérer le rendez-vous. Pour les autres demandes, le formulaire recueille :
 
 - votre nom complet ;
 - votre adresse email ;
@@ -122,7 +122,7 @@ Les informations transmises peuvent, si une relation client est établie, être 
         titre: "Destinataires et sous-traitants",
         corps: `Les données issues du formulaire sont destinées exclusivement à Maître Badirou et ne sont ni vendues, ni cédées, ni communiquées à des tiers à des fins commerciales.
 
-L'envoi du formulaire est techniquement assuré par le service **EmailJS** (EmailJS Inc.), qui achemine votre message vers la messagerie du cabinet en qualité de sous-traitant. À ce titre, les données saisies transitent par ce prestataire. Voir la politique de confidentialité d'EmailJS : [emailjs.com/legal/privacy-policy](https://www.emailjs.com/legal/privacy-policy/).
+Seules les demandes du formulaire de contact sont envoyées par e-mail. Cet envoi est assuré par le service **EmailJS** (EmailJS Inc.), qui achemine votre message vers la messagerie du cabinet en qualité de sous-traitant. À ce titre, les données saisies transitent par ce prestataire. Voir la politique de confidentialité d'EmailJS : [emailjs.com/legal/privacy-policy](https://www.emailjs.com/legal/privacy-policy/).
 
 L'affichage de certains contenus du site (domaines d'intervention, présentes pages légales) s'appuie sur **Supabase**, qui héberge la base de données du site en qualité de sous-traitant. La consultation du site implique une connexion technique à ses serveurs, au cours de laquelle votre adresse IP est traitée. Voir : [supabase.com/privacy](https://supabase.com/privacy).
 

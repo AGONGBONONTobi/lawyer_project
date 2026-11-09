@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { safeHref } from "../lib/safeHref";
 
 /**
  * Rendu du texte des pages légales saisi dans le back office.
@@ -69,8 +70,8 @@ function Inline({ texte }) {
   let dernier = 0;
   let m;
 
-  MOTIF.lastIndex = 0;
-  while ((m = MOTIF.exec(texte)) !== null) {
+  const motif = new RegExp(MOTIF.source, MOTIF.flags);
+  while ((m = motif.exec(texte)) !== null) {
     if (m.index > dernier) morceaux.push(texte.slice(dernier, m.index));
 
     if (m[1] !== undefined) {
@@ -82,12 +83,12 @@ function Inline({ texte }) {
     } else if (m[2] !== undefined) {
       morceaux.push(<strong key={m.index}>{m[2]}</strong>);
     } else {
-      const url = m[4];
+      const url = safeHref(m[4]);
       // Les liens externes s'ouvrent dans un nouvel onglet ; les ancres et les
       // routes internes doivent rester dans la page.
-      const externe = /^https?:\/\//i.test(url);
+      const externe = url !== null && /^https?:\/\//i.test(url);
       morceaux.push(
-        <a
+        url === null ? <span key={m.index}>{m[3]}</span> : <a
           key={m.index}
           href={url}
           {...(externe ? { target: "_blank", rel: "noopener noreferrer" } : {})}

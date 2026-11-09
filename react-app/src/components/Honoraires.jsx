@@ -1,67 +1,36 @@
 import Reveal from "./Reveal";
 
-const BILLING_MODES = [
-  {
-    title: "Facturation au temps passé",
-    text: "Honoraires calculés sur la base du temps effectivement consacré au dossier.",
-  },
-  {
-    title: "Facturation au forfait",
-    text: "Montant global défini à l'avance pour une prestation clairement délimitée.",
-  },
-  {
-    title: "Honoraires de résultat",
-    text: "Complément d'honoraires convenu en fonction du résultat obtenu.",
-  },
-  {
-    title: "Abonnement",
-    text: "Accompagnement juridique régulier, adapté aux besoins récurrents.",
-  },
+const OFFRES = [
+  { title: "Bilan nationalité", price: "150 €", detail: "TTC · 1 heure", text: "Vérification de la voie, des pièces et des points de vigilance. Un calendrier et un devis adaptés à votre situation.", note: "Déduit du forfait si vous confiez votre dossier au cabinet.", cta: "Réserver mon Bilan" },
+  { title: "Naturalisation", price: "2 160 €", detail: "TTC · 1 800 € HT", text: "Constitution du dossier, dépôt, suivi et préparation de l’entretien. Un accompagnement de bout en bout.", note: "Paiement en trois fois possible.", cta: "Préparer mon dossier" },
+  { title: "Recours", price: "Dès 1 800 €", detail: "TTC · 1 500 € HT", text: "Analyse d’un ajournement, d’une irrecevabilité, d’un refus de naturalisation ou de certificat de nationalité.", note: "La stratégie et les délais sont étudiés à partir de votre décision.", cta: "Faire examiner ma décision" },
 ];
+
 export default function Honoraires({ sectionRef }) {
   return (
-    <section className="pt-16 pb-12 lg:pt-24 lg:pb-16" id="honoraires" ref={sectionRef}>
+    <section className="section nationality-fees" id="honoraires" ref={sectionRef}>
       <div className="container">
-        <Reveal as="div" className="section-panel">
-          <div className="section-head">
-            <p className="eyebrow">Note d'honoraires</p>
-            <h2>Une facturation claire, expliquée avant chaque mission</h2>
-            <p className="section-intro">
-              Le montant des honoraires varie en fonction de la nature de la prestation, de la complexité de
-              l'affaire et des enjeux du litige. Les honoraires sont fixés en toute transparence dès le premier
-              rendez-vous, et une convention d'honoraires est systématiquement conclue avec le client avant le
-              début des diligences.
-            </p>
-          </div>
-
-          <div className="honoraires-grid">
-            <div className="billing-modes">
-              <p className="fiche-label">Modes de facturation</p>
-              <ul className="billing-list">
-                {BILLING_MODES.map((mode) => (
-                  <li key={mode.title}>
-                    <strong>{mode.title}</strong>
-                    <span>{mode.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="fee-slip">
-              <p className="fee-slip-label">Consultation juridique</p>
-              <p className="fee-slip-text">
-                Le client expose sa problématique de manière exhaustive afin d'obtenir les premiers conseils et
-                les solutions envisageables.
-              </p>
-              <div className="fee-slip-price">
-                <span className="price">150&nbsp;€</span>
-                <span className="price-detail">
-                  TTC · 1 heure<br />Présentiel ou visioconférence
-                </span>
-              </div>
-              <a className="btn btn-primary btn-block" href="#contact">Réserver ma consultation</a>
-            </div>
-          </div>
+        <Reveal className="section-head">
+          <p className="eyebrow">Honoraires</p>
+          <h2>Un cadre clair, dès le départ.</h2>
+          <p className="section-intro">Vous connaissez le périmètre de l’accompagnement et son coût avant de vous engager.</p>
+        </Reveal>
+        <div className="nationality-fee-grid">
+          {OFFRES.map((offre, i) => (
+            <Reveal as="article" className="nationality-fee" key={offre.title} delay={String(i + 1)}>
+              <p className="eyebrow">0{i + 1}</p>
+              <h3>{offre.title}</h3>
+              <p className="nationality-price">{offre.price}</p>
+              <p className="fee-detail">{offre.detail}</p>
+              <p>{offre.text}</p>
+              <p className="fee-note">{offre.note}</p>
+              <a href="#contact" className={`btn ${i === 0 ? "btn-primary" : "btn-outline"}`}>{offre.cta}</a>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="fee-conditions">
+          <p><strong>Voies spécifiques :</strong> certificat de nationalité, réintégration et déclarations familiales sur devis après le Bilan. Option francisation du nom ou du prénom : 360 € TTC (300 € HT).</p>
+          <p>Une convention d’honoraires est signée avant toute diligence. Frais administratifs, traductions et débours non compris. Aucun résultat ne peut être garanti.</p>
         </Reveal>
       </div>
     </section>

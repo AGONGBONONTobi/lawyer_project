@@ -43,16 +43,16 @@
   --radius-sharp: 2px;
   --muted: oklch(0.97 0 0);
 
-  /* Gold accent — champagne parisien */
-  --gold: #B8975A;            /* decorative: large text, borders, icons, accents */
-  --gold-light: #C9A96E;
-  --gold-ink: #8A6E2A;        /* accessible gold for SMALL text on light (≈4.8:1 on #FFF) */
-  --gold-pale: rgba(184, 151, 90, 0.12);
-  --gold-border: rgba(184, 151, 90, 0.35);
+  /* Alias des accents historiques — palette définie dans tokens.css */
+  --gold: var(--accent-ink); /* Alias historique, désormais taupe. */
+  --gold-light: var(--sand-200);
+  --gold-ink: var(--accent-ink);
+  --gold-pale: rgb(var(--accent-rgb) / 0.12);
+  --gold-border: rgb(var(--accent-rgb) / 0.35);
 
   /* Translucent glass panel */
   --panel-bg: rgba(255, 250, 240, 0.88);
-  --panel-border: rgba(184, 151, 90, 0.22);
+  --panel-border: rgb(var(--accent-rgb) / 0.22);
 
   /* Fixed pair: always a dark ink band with light paper text, in both themes.
      Used only for footer, back-to-top and the skip link. */
@@ -281,8 +281,8 @@ ul { list-style: none; margin: 0; padding: 0; }
       to right,
       var(--parchment-warm) 0%,
       var(--parchment-warm) 38%,
-      rgba(247, 245, 241, 0.7) 55%,
-      rgba(247, 245, 241, 0.15) 100%
+      rgba(244, 247, 250, 0.7) 55%,
+      rgba(244, 247, 250, 0.15) 100%
     ),
     url("/assets/img/hero-palais-justice.jpg");
   background-color: var(--parchment-warm);
@@ -555,7 +555,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 .section-panel:hover {
-  border-color: rgba(184, 151, 90, 0.45);
+  border-color: rgb(var(--accent-rgb) / 0.45);
   box-shadow: 0 45px 90px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
@@ -602,13 +602,13 @@ ul { list-style: none; margin: 0; padding: 0; }
   border: 1px dashed var(--gold-border);
   padding: 36px;
   position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(184, 151, 90, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgb(var(--accent-rgb) / 0.08);
   border-radius: 4px;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .fee-slip:hover {
   transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(184, 151, 90, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgb(var(--accent-rgb) / 0.15);
 }
 .fee-slip::before {
   content: "";
@@ -686,18 +686,18 @@ ul { list-style: none; margin: 0; padding: 0; }
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(184, 151, 90, 0.2);
-  border: 1.5px solid rgba(184, 151, 90, 0.6);
+  background: rgb(var(--accent-rgb) / 0.2);
+  border: 1.5px solid rgb(var(--accent-rgb) / 0.6);
   color: var(--gold-ink);
   flex-shrink: 0;
-  box-shadow: 0 0 10px rgba(184, 151, 90, 0.05), inset 0 0 0 1px rgba(184, 151, 90, 0.08);
+  box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.05), inset 0 0 0 1px rgb(var(--accent-rgb) / 0.08);
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 .info-list li:hover .icon-wrapper {
   transform: scale(1.1) rotate(5deg);
-  background-color: rgba(184, 151, 90, 0.22);
+  background-color: rgb(var(--accent-rgb) / 0.22);
   border-color: var(--gold);
-  box-shadow: 0 0 16px rgba(184, 151, 90, 0.25), inset 0 0 0 1px rgba(184, 151, 90, 0.15);
+  box-shadow: 0 0 16px rgb(var(--accent-rgb) / 0.25), inset 0 0 0 1px rgb(var(--accent-rgb) / 0.15);
 }
 .info-list .icon { width: 18px; height: 18px; color: var(--gold-ink); margin-top: 0; }
 .info-list strong { display: block; margin-bottom: 0.3em; font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; color: var(--text); }
@@ -769,7 +769,7 @@ input, select, textarea {
   border: none;
   border-bottom: 1.5px solid var(--field-line);
   border-radius: 4px 4px 0 0;
-  background: rgba(184, 151, 90, 0.06);
+  background: rgb(var(--accent-rgb) / 0.06);
   color: var(--text);
   transition: border-color var(--transition), background-color var(--transition), padding-left var(--transition);
 }
@@ -781,11 +781,11 @@ textarea {
   border-radius: 4px;
 }
 .dark input, .dark select, .dark textarea {
-  background: rgba(184, 151, 90, 0.01);
+  background: rgb(var(--accent-rgb) / 0.01);
 }
 input:focus, select:focus, textarea:focus {
   border-bottom-color: var(--gold);
-  background: rgba(184, 151, 90, 0.06);
+  background: rgb(var(--accent-rgb) / 0.06);
   outline: none;
   padding-left: 1.25em;
 }
@@ -1054,7 +1054,7 @@ textarea { resize: vertical; min-height: 110px; }
 }
 .domain-card-shine {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(184,151,90,0.08) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgb(var(--accent-rgb) / 0.08) 0%, transparent 60%);
   opacity: 0; transition: opacity 400ms ease; pointer-events: none;
 }
 .domain-card:hover .domain-card-shine { opacity: 1; }
@@ -1093,11 +1093,11 @@ textarea { resize: vertical; min-height: 110px; }
 .domain-card:hover .domain-card-cta { opacity: 1; transform: translateX(0); }
 .domain-card-cta .icon { width: 14px; height: 14px; transition: transform 250ms ease; }
 .domain-card-cta:hover .icon { transform: translateX(3px); }
-.domain-card + .domain-card { border-left: 1px solid rgba(184,151,90,0.25); }
+.domain-card + .domain-card { border-left: 1px solid rgb(var(--accent-rgb) / 0.25); }
 @media (max-width: 900px) {
   .domain-cards-grid { grid-template-columns: 1fr; }
   .domain-card { min-height: 360px; }
-  .domain-card + .domain-card { border-left: none; border-top: 1px solid rgba(184,151,90,0.25); }
+  .domain-card + .domain-card { border-left: none; border-top: 1px solid rgb(var(--accent-rgb) / 0.25); }
   .domain-card-points { max-height: 200px; opacity: 1; }
   .domain-card-cta { opacity: 1; transform: translateX(0); }
   .domain-card-body { transform: translateY(0); }
@@ -1265,7 +1265,7 @@ textarea { resize: vertical; min-height: 110px; }
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --panel-bg: rgba(22, 22, 22, 0.9);
-  --panel-border: rgba(184, 151, 90, 0.15);
+  --panel-border: rgb(var(--accent-rgb) / 0.15);
   --parchment-warm: #1a1816;
   --gold-ink: var(--gold-light); /* on dark, gold is already high-contrast */
   --primary: oklch(0.922 0 0);

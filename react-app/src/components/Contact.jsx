@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Reservation from "./Reservation";
 import Reveal from "./Reveal";
 
 // ── Configuration EmailJS ─────────────────────────────────────────────────────
@@ -112,15 +113,15 @@ export default function Contact({ sectionRef }) {
   }
 
   return (
-    <section className="pt-12 pb-24 lg:pt-16 lg:pb-32" id="contact" ref={sectionRef}>
+    <section className="section-photo-shared" id="contact" ref={sectionRef}>
       <div className="container">
         <Reveal as="div" className="section-panel">
           <div className="section-head">
             <p className="eyebrow">Prendre rendez-vous</p>
-            <h2>Contact</h2>
+            <h2>Parlons de votre projet.</h2>
             <p className="section-intro">
-              Une question, une situation à exposer&nbsp;? Contactez le cabinet par téléphone, par email ou via
-              le formulaire ci-dessous.
+              Réservez votre Bilan nationalité : une heure au cabinet ou en visio, 150 € TTC,
+              déduits du forfait si vous confiez votre dossier au cabinet. Choisissez une disponibilité dans l’agenda ci-dessous.
             </p>
           </div>
 
@@ -184,51 +185,60 @@ export default function Contact({ sectionRef }) {
               </ul>
             </Reveal>
 
-            <Reveal as="form" className="contact-form" onSubmit={handleSubmit} noValidate>
-              <div className="form-row">
-                <label htmlFor="name">Nom complet</label>
-                <input type="text" id="name" name="name" required autoComplete="name" />
-              </div>
-              <div className="form-row form-row-split">
-                <div>
-                  <label htmlFor="email">Email</label>
-                  <input type="email" id="email" name="email" required autoComplete="email" />
-                </div>
-                <div>
-                  <label htmlFor="phone">Téléphone</label>
-                  <input type="tel" id="phone" name="phone" autoComplete="tel" />
-                </div>
-              </div>
-              <div className="form-row">
-                <label htmlFor="subject">Sujet</label>
-                <select id="subject" name="subject" defaultValue="Droit commercial">
-                  <option>Droit commercial</option>
-                  <option>Droit de la famille</option>
-                  <option>Droit des étrangers</option>
-                  <option>Autre demande</option>
-                </select>
-              </div>
-              <div className="form-row">
-                <label htmlFor="message">Message</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-              </div>
-              <p className="form-note">
-                En envoyant ce formulaire, votre demande sera directement transmise à Maître Badirou.
-              </p>
-              <button type="submit" className="btn btn-primary btn-block" disabled={isLoading}>
-                {isLoading ? (
-                  <span>Envoi en cours...</span>
-                ) : (
-                  <>
-                    <svg className="icon" aria-hidden="true"><use href="#icon-send"></use></svg>
-                    Envoyer ma demande
-                  </>
-                )}
-              </button>
-              <p className={`form-status ${status.kind}`} role="status" aria-live="polite">
-                {status.text}
-              </p>
-            </Reveal>
+            <div>
+              <Reservation />
+              <details className="mt-8">
+                <summary className="cursor-pointer">Contacter le cabinet pour une autre demande</summary>
+                <Reveal as="form" className="contact-form" onSubmit={handleSubmit} noValidate>
+                  <div className="form-row">
+                    <label htmlFor="name">Nom complet</label>
+                    <input type="text" id="name" name="name" required autoComplete="name" />
+                  </div>
+                  <div className="form-row form-row-split">
+                    <div>
+                      <label htmlFor="email">Email</label>
+                      <input type="email" id="email" name="email" required autoComplete="email" />
+                    </div>
+                    <div>
+                      <label htmlFor="phone">Téléphone</label>
+                      <input type="tel" id="phone" name="phone" autoComplete="tel" />
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <label htmlFor="subject">Sujet</label>
+                    <select id="subject" name="subject" defaultValue="Autre demande">
+                      <option>Naturalisation ou certificat de nationalité</option>
+                      <option>Ajournement ou refus</option>
+                      <option>Recrutement d’un diplômé étranger</option>
+                      <option>Droit commercial</option>
+                      <option>Droit de la famille</option>
+                      <option>Droit des étrangers</option>
+                      <option>Autre demande</option>
+                    </select>
+                  </div>
+                  <div className="form-row">
+                    <label htmlFor="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                  </div>
+                  <p className="form-note">
+                    En envoyant ce formulaire, votre demande sera directement transmise à Maître Badirou.
+                  </p>
+                  <button type="submit" className="btn btn-primary btn-block" disabled={isLoading}>
+                    {isLoading ? (
+                      <span>Envoi en cours...</span>
+                    ) : (
+                      <>
+                        <svg className="icon" aria-hidden="true"><use href="#icon-send"></use></svg>
+                        Envoyer ma demande
+                      </>
+                    )}
+                  </button>
+                  <p className={`form-status ${status.kind}`} role="status" aria-live="polite">
+                    {status.text}
+                  </p>
+                </Reveal>
+              </details>
+            </div>
           </div>
         </Reveal>
       </div>
