@@ -2,12 +2,36 @@
 
 
 section[id] { scroll-margin-top: 100px; }
-:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 4px; }
+:is(a, button, input, select, textarea, summary, [tabindex="0"]):focus-visible {
+  outline: 2.5px solid var(--accent-ink);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 1px white;
+}
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: var(--navy-ink);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 1000;
+  transition: top 0.2s ease;
+  text-decoration: underline;
+}
+.skip-link:focus, .skip-link:focus-visible {
+  top: 16px;
+  outline: 3px solid var(--accent-ink);
+  outline-offset: 2px;
+}
 .btn { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: .9rem; min-height: 48px; }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 a:where(:not([data-slot="button"])):hover { color: var(--blue-800); }
 .text-link { display: inline-flex; gap: 16px; align-items: center; padding: 10px 0; font-weight: 600; text-underline-offset: 6px; }
 .source-note { font-size: .82rem; color: var(--muted-ink); line-height: 1.65; }
+.form-status.is-error { color: var(--error-ink); font-weight: 600; }
+.form-status.is-success { color: var(--success-ink); font-weight: 600; }
 
 /* Le portrait et les révélations du hero restent en place. */
 .hero { padding: 148px 0 88px; }
@@ -129,8 +153,17 @@ a:where(:not([data-slot="button"])):hover { color: var(--blue-800); }
 .booking-panel .contact-form > label:not(:first-child) { margin-top: 18px; }
 .booking-panel .contact-form > button { margin-top: 16px; }
 .booking-confirmation { border-inline-start: 3px solid; padding: 12px 16px; }
-#contact .section-head .eyebrow { color: #754359; }
-#contact .info-list li:first-child .icon-wrapper { background: #f3e9ef; border-color: #aa8396; color: #754359; }
+#contact .section-head .eyebrow { color: var(--accent-ink); }
+#contact .info-list .icon-wrapper {
+  background: var(--patina-pale);
+  border-color: var(--line);
+  color: var(--patina-ink);
+}
+#contact .info-list li:hover .icon-wrapper {
+  background: var(--patina-ink);
+  border-color: var(--patina-ink);
+  color: white;
+}
 
 .nationality-detail { padding: 32px 0; border-top: 1px solid var(--line); scroll-margin-top: 40px; }
 .nationality-detail h2 { font-size: 1.8rem; }

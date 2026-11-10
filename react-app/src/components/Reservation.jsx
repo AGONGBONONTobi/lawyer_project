@@ -79,7 +79,7 @@ export default function Reservation() {
       <Essais key={booked || "libre"} />
     </details>}
     {demo && !booked && <button type="button" className="text-link" onClick={() => setReload(n => n + 1)}>Reconnecter l’agenda du cabinet</button>}
-    <p role="status">{message}</p>
+    <p role="status" className={message ? "form-status is-error" : ""}>{message}</p>
   </div>;
 }
 

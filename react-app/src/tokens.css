@@ -15,6 +15,14 @@
   --patina-pale: #e3eee9;
   --patina-ink: #365e52;
 
+  /* Sémantique fonctionnelle (contrastes validés WCAG AA / RGAA >= 4.5:1) */
+  --error-ink: #b3261e;
+  --error-bg: #fdeeed;
+  --error-border: #f0a39e;
+  --success-ink: #205c43;
+  --success-bg: #e6f4ea;
+  --success-border: #a8dab5;
+
   /* Usages */
   --text: var(--navy-ink);
   --parchment: var(--slate-50);

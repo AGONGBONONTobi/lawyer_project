@@ -38,7 +38,7 @@ export default function Agenda() {
       <label>Début du créneau<input type="datetime-local" name="debut" required /></label>
       <button className="btn btn-primary" disabled={busy || slots === null}>Ouvrir ce créneau</button>
     </form>
-    <p role="status">{error}</p>
+    <p role="status" className={error ? "form-status is-error" : ""}>{error}</p>
     <h2 className="mt-8">Prochains créneaux</h2>
     {slots === null ? <p>Chargement de l’agenda. Si la liste reste indisponible, vérifiez la configuration et l’accès du compte cabinet.</p>
       : slots.length === 0 ? <p>Aucun créneau à venir.</p>
