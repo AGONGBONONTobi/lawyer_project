@@ -147,12 +147,13 @@ a:where(:not([data-slot="button"])):hover { color: var(--blue-800); }
 .booking-confirmation {
   background-color: var(--patina-pale);
   color: var(--patina-ink);
-  border-color: var(--patina-ink);
+  border: 1px solid var(--patina-ink);
+  border-radius: 6px;
+  padding: 14px 18px;
 }
 
 .booking-panel .contact-form > label:not(:first-child) { margin-top: 18px; }
 .booking-panel .contact-form > button { margin-top: 16px; }
-.booking-confirmation { border-inline-start: 3px solid; padding: 12px 16px; }
 #contact .section-head .eyebrow { color: var(--accent-ink); }
 #contact .info-list .icon-wrapper {
   background: var(--patina-pale);
