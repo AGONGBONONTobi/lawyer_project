@@ -32,3 +32,80 @@ export function orienter(a) {
   if (!pistes.length) add("bilan", "Faire le point sur votre situation", "Ces réponses ne permettent pas de retenir une voie précise. Elles n’excluent pas une possibilité : des exceptions et d’autres situations existent, notamment en cas de naissance en France.");
   return pistes.slice(0, 3);
 }
+
+export function libelleQuestion(questionId) {
+  const q = QUESTIONS.find(item => item.id === questionId);
+  return q ? q.title : questionId;
+}
+
+export function libelleReponse(questionId, valeur) {
+  const q = QUESTIONS.find(item => item.id === questionId);
+  if (!q) return valeur;
+  const opt = q.options.find(([v]) => v === valeur);
+  return opt ? opt[1] : valeur;
+}
+
+export async function enregistrerDiagnostic(donnees) {
+  const local = typeof window !== "undefined" && ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+  try {
+    const { agendaRpc } = await import("./agenda.js");
+    const id = await agendaRpc("enregistrer_diagnostic", {
+      nom_visiteur: donnees.nom,
+      courriel: donnees.email,
+      telephone_contact: donnees.telephone || "",
+      commentaire_libre: donnees.commentaire || "",
+      reponses_json: donnees.reponses,
+      pistes_json: donnees.pistes
+    });
+    return id;
+  } catch (error) {
+    if (local) {
+      const { enregistrerDiagnosticEssai } = await import("./diagnosticsEssai.js");
+      return enregistrerDiagnosticEssai(donnees);
+    }
+    throw error;
+  }
+}
+
+export async function fetchDiagnostics() {
+  const local = typeof window !== "undefined" && ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+  try {
+    const { agendaRpc } = await import("./agenda.js");
+    const list = await agendaRpc("liste_diagnostics");
+    return list || [];
+  } catch (error) {
+    if (local) {
+      const { lireDiagnosticsEssai } = await import("./diagnosticsEssai.js");
+      return lireDiagnosticsEssai();
+    }
+    throw error;
+  }
+}
+
+export async function majStatutDiagnostic(id, statut) {
+  const local = typeof window !== "undefined" && ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+  try {
+    const { agendaRpc } = await import("./agenda.js");
+    return await agendaRpc("maj_statut_diagnostic", { diagnostic_id: id, nouveau_statut: statut });
+  } catch (error) {
+    if (local) {
+      const { majStatutDiagnosticEssai } = await import("./diagnosticsEssai.js");
+      return majStatutDiagnosticEssai(id, statut);
+    }
+    throw error;
+  }
+}
+
+export async function supprimerDiagnostic(id) {
+  const local = typeof window !== "undefined" && ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+  try {
+    const { agendaRpc } = await import("./agenda.js");
+    return await agendaRpc("supprimer_diagnostic", { diagnostic_id: id });
+  } catch (error) {
+    if (local) {
+      const { supprimerDiagnosticEssai } = await import("./diagnosticsEssai.js");
+      return supprimerDiagnosticEssai(id);
+    }
+    throw error;
+  }
+}

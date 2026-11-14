@@ -54,6 +54,10 @@ export default function Reservation() {
     } finally { setBusy(false); }
   }
 
+  const diagInfo = typeof window !== "undefined"
+    ? JSON.parse(sessionStorage.getItem("cabinet-dernier-diagnostic") || "null")
+    : null;
+
   return <div className="booking-panel">
     <h3>Réserver mon Bilan</h3>
     {demo && <p className="form-note">Mode essai local · créneaux fictifs. Aucune réservation auprès du cabinet.</p>}
@@ -67,9 +71,10 @@ export default function Reservation() {
         <label htmlFor="booking-mode">Lieu du rendez-vous</label>
         <select name="format_rdv" id="booking-mode"><option value="cabinet">Au cabinet · Paris 17ᵉ</option><option value="visio">En visioconférence</option></select>
         <label htmlFor="booking-name">Nom complet</label>
-        <input key={String(demo)} readOnly={demo} defaultValue={demo ? "Personne de test" : ""} id="booking-name" name="nom_client" required autoComplete="name" maxLength={120} />
+        <input key={String(demo) + (diagInfo?.nom || "")} readOnly={demo} defaultValue={demo ? "Personne de test" : (diagInfo?.nom || "")} id="booking-name" name="nom_client" required autoComplete="name" maxLength={120} />
         <label htmlFor="booking-email">Adresse e-mail de contact</label>
-        <input key={String(demo) + "-email"} readOnly={demo} defaultValue={demo ? "essai@example.org" : ""} id="booking-email" name="courriel" type="email" autoComplete="email" maxLength={254} required />
+        <input key={String(demo) + "-email" + (diagInfo?.email || "")} readOnly={demo} defaultValue={demo ? "essai@example.org" : (diagInfo?.email || "")} id="booking-email" name="courriel" type="email" autoComplete="email" maxLength={254} required />
+        {diagInfo && !demo && <p className="form-note">Vos éléments de diagnostic (Réf. #{diagInfo.id.slice(0, 8).toUpperCase()}) seront associés à ce rendez-vous.</p>}
         {!demo && <p className="form-note">Le cabinet retrouve ces coordonnées dans son agenda privé. <a href="/confidentialite">Confidentialité</a></p>}
         <button className="btn btn-primary" disabled={busy}>{busy ? "Réservation en cours…" : demo ? "Tester cette réservation" : "Confirmer mon Bilan · 150 € TTC"}</button>
         </>}

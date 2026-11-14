@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { QUESTIONS, orienter } from '../src/lib/diagnostic.js';
+import { QUESTIONS, orienter, libelleQuestion, libelleReponse } from '../src/lib/diagnostic.js';
 
 const base = { naissance: 'etranger', parent: 'non', documents: 'non', perte: 'non', residence: 'hors', age: 'adulte', mariage: 'non', enfant: 'non', fratrie: 'non', langue: 'aucun', ressources: 'non', demande: 'non' };
 
@@ -57,3 +57,10 @@ test('pas de piste ne signifie pas absence de droits', () => {
   assert.equal(result.id, 'bilan');
   assert.match(result.text, /n’excluent pas/);
 });
+test('libelleQuestion et libelleReponse traduisent fidèlement questions et réponses', () => {
+  assert.equal(libelleQuestion('naissance'), 'Où êtes-vous né(e) ?');
+  assert.equal(libelleReponse('naissance', 'france'), 'En France');
+  assert.equal(libelleReponse('naissance', 'etranger'), 'À l’étranger');
+  assert.equal(libelleReponse('inconnu', 'test'), 'test');
+});
+

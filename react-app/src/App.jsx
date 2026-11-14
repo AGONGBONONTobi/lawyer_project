@@ -8,6 +8,7 @@ import MentionsLegales from "./pages/MentionsLegales";
 import Confidentialite from "./pages/Confidentialite";
 import Agenda from "./pages/admin/Agenda";
 import Connexion from "./pages/admin/Connexion";
+import Diagnostics from "./pages/admin/Diagnostics";
 import Domaines from "./pages/admin/Domaines";
 import PagesLegales from "./pages/admin/PagesLegales";
 import { RequireAuth } from "./pages/admin/AdminLayout";
@@ -26,6 +27,7 @@ function App() {
 
         {/* Back office — non référencé depuis le site public. */}
         <Route path="/admin/agenda" element={<RequireAuth><Agenda /></RequireAuth>} />
+        <Route path="/admin/diagnostics" element={<RequireAuth><Diagnostics /></RequireAuth>} />
         <Route path="/admin/connexion" element={<Connexion />} />
         <Route
           path="/admin/domaines"
@@ -43,7 +45,7 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="/admin" element={<Navigate to="/admin/domaines" replace />} />
+        <Route path="/admin" element={<Navigate to="/admin/agenda" replace />} />
       </Routes>
     </>
   );

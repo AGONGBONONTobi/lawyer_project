@@ -5,6 +5,7 @@ import { useSession } from "../../lib/useSession";
 
 const ONGLETS = [
   { to: "/admin/agenda", libelle: "Agenda" },
+  { to: "/admin/diagnostics", libelle: "Diagnostics" },
   { to: "/admin/domaines", libelle: "Domaines d'expertise" },
   { to: "/admin/pages-legales", libelle: "Pages légales" },
 ];

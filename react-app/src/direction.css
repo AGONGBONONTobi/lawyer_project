@@ -74,17 +74,17 @@ a:where(:not([data-slot="button"])):hover { color: var(--blue-800); }
 .path-invitation { border-top: 2px solid var(--ribbon); padding: 25px 0; }
 .path-invitation h3 { font-size: 1.6rem; margin-bottom: 20px; }
 .naturalisation {
-  --text: #f7fafc;
-  --muted-ink: #cfdee5;
-  --accent-ink: #b5d6c8;
-  --line: #64818b;
+  --text: #ffffff;
+  --muted-ink: #b8c0cc;
+  --accent-ink: var(--ribbon-on-dark);
+  --line: #343942;
   background: var(--navy-ink);
   color: var(--text);
 }
 .naturalisation .eyebrow { color: var(--accent-ink); }
 .naturalisation a:hover { color: white; text-decoration-color: currentColor; }
-.employers { background: var(--patina-pale); }
-.employers .eyebrow, .employers h2 em { color: var(--patina-ink); }
+.employers { background: var(--slate-100); }
+.employers .eyebrow, .employers h2 em { color: var(--accent-ink); }
 .naturalisation-grid, .employers-inner { display: grid; grid-template-columns: .9fr 1.1fr; gap: 90px; }
 .naturalisation h2, .employers h2 { font-size: clamp(2.2rem, 3.7vw, 3.5rem); }
 .naturalisation h2 em, .employers h2 em { font-weight: 400; }
@@ -99,12 +99,12 @@ a:where(:not([data-slot="button"])):hover { color: var(--blue-800); }
 .method-steps p { font-size: .85rem; color: var(--muted-ink); }
 .nationality-fees { border: 0; background: transparent; }
 .section-photo-shared::before {
-  background: linear-gradient(180deg, rgba(22, 41, 56, .4), rgba(22, 41, 56, .32) 50%, rgba(22, 41, 56, .52));
+  background: linear-gradient(180deg, rgba(22, 24, 29, .45), rgba(22, 24, 29, .36) 50%, rgba(22, 24, 29, .58));
 }
 #contact .section-panel {
   background: var(--panel-bg);
   border-color: var(--panel-border);
-  box-shadow: 0 24px 64px rgba(22, 41, 56, .2);
+  box-shadow: 0 24px 64px rgba(22, 24, 29, .22);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -132,8 +132,8 @@ a:where(:not([data-slot="button"])):hover { color: var(--blue-800); }
 
 #faq { background: var(--slate-100); }
 
-.site-footer { background: var(--patina-pale); }
-.site-footer .footer-col .fiche-label { color: var(--patina-ink); }
+.site-footer { background: var(--slate-100); }
+.site-footer .footer-col .fiche-label { color: var(--accent-ink); }
 .site-footer .footer-bottom {
   background: var(--navy-ink);
   --muted-ink: var(--slate-200);
@@ -142,7 +142,7 @@ a:where(:not([data-slot="button"])):hover { color: var(--blue-800); }
 }
 .footer-bottom .footer-legal-links a:hover { text-decoration: underline; }
 
-/* Dans l’agenda, le vert patiné signale les disponibilités et leur confirmation. */
+/* Dans l’agenda, le bleu électrique signale les disponibilités et leur confirmation. */
 .booking-panel { border-top: 2px solid var(--patina-ink); padding-top: 18px; }
 .booking-confirmation {
   background-color: var(--patina-pale);

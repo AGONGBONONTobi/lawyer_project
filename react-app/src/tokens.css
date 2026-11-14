@@ -1,25 +1,26 @@
-/* Palette du cabinet : blanc, gris bleuté et bleu encre. */
+/* Palette du cabinet : blanc, gris anthracite et bleu électrique. */
 :root {
-  /* Primitives */
+  /* Primitives — Gris anthracite, Blanc & Bleu électrique */
   --slate-50: #ffffff;
-  --slate-100: #f4f7fa;
-  --slate-200: #e6edf2;
-  --slate-300: #245579;
-  --slate-400: #193e5b;
-  --blue-600: #386785;
-  --blue-700: #245579;
-  --blue-800: #17394f;
-  --navy-ink: #192d3b;
-  --slate-muted: #485d6b;
+  --slate-100: #f4f6f8;    /* Blanc perle / gris très léger */
+  --slate-200: #e8ecf0;    /* Gris anthracite très clair */
+  --slate-300: #0052ff;    /* Bleu électrique principal (5.24:1 sur blanc) */
+  --slate-400: #003ecb;    /* Bleu électrique soutenu au survol (7.7:1 sur blanc) */
+  --blue-600: #2970ff;
+  --blue-700: #0052ff;
+  --blue-800: #16181d;     /* Gris anthracite profond */
+  --navy-ink: #16181d;     /* Gris anthracite (17.5:1 sur blanc) */
+  --slate-muted: #4c535d;  /* Gris acier / anthracite secondaire (7.7:1 sur blanc) */
 
-  --patina-pale: #e3eee9;
-  --patina-ink: #365e52;
+  /* Accents secondaires harmonisés en bleu électrique doux */
+  --patina-pale: #eef3ff;
+  --patina-ink: #0042cc;   /* Bleu électrique foncé pour lisibilité (7.6:1 sur #eef3ff) */
 
   /* Sémantique fonctionnelle (contrastes validés WCAG AA / RGAA >= 4.5:1) */
   --error-ink: #b3261e;
   --error-bg: #fdeeed;
   --error-border: #f0a39e;
-  --success-ink: #205c43;
+  --success-ink: #136c45;
   --success-bg: #e6f4ea;
   --success-border: #a8dab5;
 
@@ -30,15 +31,15 @@
   --parchment-deep: var(--slate-200);
   --ribbon: var(--slate-300);
   --ribbon-dark: var(--slate-400);
-  --on-ribbon: white;
-  --ribbon-on-dark: var(--slate-100);
+  --on-ribbon: #ffffff;
+  --ribbon-on-dark: #609bff; /* Bleu électrique lumineux sur anthracite sombre (6.5:1) */
   --accent-ink: var(--blue-700);
-  --accent-rgb: 36 85 121;
+  --accent-rgb: 0 82 255;
   --muted-ink: var(--slate-muted);
-  --line: #c9d4dc;
-  --field-line: #677e8e;
-  --ink-fixed: var(--blue-800);
-  --paper-fixed: var(--slate-50);
+  --line: #d4d8de;
+  --field-line: #626b75;
+  --ink-fixed: #16181d;
+  --paper-fixed: #ffffff;
   --background: var(--parchment);
   --foreground: var(--text);
   --card: var(--parchment);
@@ -54,7 +55,7 @@
   --border: var(--line);
   --ring: var(--accent-ink);
 
-  /* Compatibilité des anciens composants : ces jetons ne sont plus dorés. */
+  /* Compatibilité des anciens composants */
   --gold: var(--accent-ink);
   --gold-light: var(--slate-200);
   --gold-ink: var(--accent-ink);
@@ -62,8 +63,8 @@
   --gold-border: rgb(var(--accent-rgb) / .24);
 
   /* Panneau posé sur la photographie. */
-  --panel-bg: rgb(255 255 255 / .94);
-  --panel-border: rgb(201 212 220 / .8);
+  --panel-bg: rgb(255 255 255 / .96);
+  --panel-border: rgb(212 216 222 / .85);
   --button-bg: var(--ribbon);
   --button-fg: var(--on-ribbon);
   --button-bg-hover: var(--ribbon-dark);
